@@ -1,0 +1,19 @@
+<h1><%= @project.name %></h1>
+
+<% @project.files.each do |file| %>
+  <p><%= link_to file.filename.to_s, url_for(file) %></p>
+<% end %>
+
+<%= link_to 'Edit', edit_project_path(@project) %>
+<%= link_to 'Back', projects_path %>
+
+
+<%= form_with(url: compare_project_path(@project), method: :post, local: true) do %>
+  <div>
+    <%= select_tag 'file1_id', options_from_collection_for_select(@project.files, 'id', 'filename') %>
+  </div>
+  <div>
+    <%= select_tag 'file2_id', options_from_collection_for_select(@project.files, 'id', 'filename') %>
+  </div>
+  <%= submit_tag 'Compare' %>
+<% end %>

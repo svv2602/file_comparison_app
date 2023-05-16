@@ -1,0 +1,9 @@
+<h1>Uploaded Files</h1>
+
+<%= link_to 'Upload New File', new_project_uploaded_file_path(@project) %>
+
+<% @uploaded_files.each do |uploaded_file| %>
+  <div>
+    <h2><%= link_to uploaded_file.file.filename, project_uploaded_file_path(@project, uploaded_file) %></h2>
+  </div>
+<% end %>

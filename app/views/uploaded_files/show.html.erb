@@ -1,0 +1,4 @@
+<h1><%= @uploaded_file.file.filename %></h1>
+
+<%= link_to 'Edit', edit_project_uploaded_file_path(@project, @uploaded_file) %>
+<%= link_to 'Back', project_uploaded_files_path(@project) %>

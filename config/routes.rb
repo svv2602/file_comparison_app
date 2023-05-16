@@ -1,0 +1,8 @@
+Rails.application.routes.draw do
+  devise_for :users
+  resources :projects do
+    resources :uploaded_files
+    post 'compare', on: :member
+  end
+  root "projects#index"
+end
