@@ -49,7 +49,8 @@ class PdfProcessor
 
     def match_result(o1, o2)
       result = hash_itog(o1, o2)
-      find_key_in_hash(result, "arr_row2", "sum_all")
+      hash = find_key_in_hash(result, "arr_row2", "sum_all")
+      hash_to_arr(hash)
     end
 
 
@@ -74,14 +75,11 @@ class PdfProcessor
       hash_all.each do |key, hash|
         hash.each do |key, value|
           if key == target_key
-            max_element = {}
-            max_element["row1"] = hash["row1"]
-            hash_max_element = max_el_in_hash(value, key_max)
-            hash_max_element.each do |key,value|
-              max_element[key] = value
-            end
-
-            result[i.to_s] = max_element
+            max_element = max_el_in_hash(value, key_max)
+            result[i.to_s] = {
+              "row1" => hash["row1"],
+              "row2" => max_element
+            }
           end
 
           if value.is_a?(Hash)

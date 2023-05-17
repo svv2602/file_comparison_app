@@ -1,0 +1,5 @@
+<% if @results.present? %>
+  <%= turbo_stream.append(:results) do %>
+    <%= render 'projects/compare_results', results: @results %>
+  <% end %>
+<% end %>

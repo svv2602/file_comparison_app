@@ -1,3 +1,5 @@
+
+
 VALUE_MANUFACTURER = ["michelin", "bridgestone", "goodyear"]
 VALUE_SPEED = ('A'..'Y').to_a << "ZR"
 VALUE_CURRENCY = ['US\$|US|EUR', '\$', '€']
@@ -33,3 +35,17 @@ HASH_PROPERTIES = [
   { other: /^#{REG_VALUE_OTHER}$/ },
   { service_parts: /#{REG_VALUE_SERVICE_PARTS}/ },
 ]
+
+
+SIMPLE_HASH ={
+  "23"=>{"row1"=>"  385/55R22.5 20 NEO AllroadsT2 TL                               160K                 US$222.00",
+         "row2"=>"             385/55R22.5 20 NEO AllroadsT2 TL  20   PCS   US$222.00    US$4,440.00",
+         "sum"=>5,
+         "sum_all"=>80.0,
+         "line_num"=>30},
+  "25"=>{"row1"=>"  175/55R17 20 NEO AllroadsT2 TL                                         US$222.00",
+         "row2"=>"             385/55R22.5 20 NEO AllroadsT2 TL  20   PCS   US$222.00    US$4,440.00",
+         "sum"=>5,
+         "sum_all"=>80.0,
+         "line_num"=>30}
+}

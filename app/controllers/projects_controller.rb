@@ -1,4 +1,4 @@
-require './lib/servis_pdf/pdf_processor'
+require 'servis_pdf/pdf_processor'
 
 class ProjectsController < ApplicationController
   before_action :authenticate_user!
@@ -11,6 +11,7 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1
   def show
+    # @results = ""
   end
 
   # GET /projects/new
@@ -57,9 +58,12 @@ class ProjectsController < ApplicationController
     file2 = PdfProcessor.new(pdf_blob2.id)
 
     @results = PdfProcessor.match_result(file1, file2)
-    # puts @results
+    puts @results
     # Отображать результаты в представлении compare
-    render :compare
+    respond_to do |format|
+      format.turbo_stream { render turbo_stream: turbo_stream.append("results", partial: "projects/compare_results", locals: { results: @results }) }
+    end
+
   end
 
   private
@@ -67,6 +71,7 @@ class ProjectsController < ApplicationController
   def set_project
     @project = current_user.projects.find(params[:id])
     redirect_to root_path unless @project.user == current_user
+    # raise ActiveRecord::RecordNotFound unless @project.user == current_user
   end
 
   # Only allow a list of trusted parameters through.
