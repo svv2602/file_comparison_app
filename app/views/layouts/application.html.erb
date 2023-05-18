@@ -11,6 +11,14 @@
   </head>
 
   <body>
+  <%= render 'layouts/header' %>
+  <div class="container container-fluid mt-5">
     <%= yield %>
+  </div>
+  <style>
+      .page-content {
+          padding-top: 40px;
+      }
+  </style>
   </body>
 </html>

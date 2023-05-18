@@ -1,12 +1,11 @@
-
 <% if results.present? %>
-  <h1>Comparison Results</h1>
+  <h1 class="mt-4">Comparison Results</h1>
   <% results.each do |result| %>
-    <div>
+    <div class="mt-2">
       <strong>Line:</strong> <%= result[0] %><br>
       <strong>Match:</strong> <%= result[1]["row2"] %>
     </div>
   <% end %>
 <% end %>
 
-<%= link_to 'Back', @project %>
+<%= link_to 'Back', @project, class: "btn btn-secondary mt-4" %>

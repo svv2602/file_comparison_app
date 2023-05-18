@@ -57,8 +57,13 @@ class ProjectsController < ApplicationController
     pdf_blob2 = ActiveStorage::Blob.find(params[:file2_id])
     file2 = PdfProcessor.new(pdf_blob2.id)
 
+
+
     @results = PdfProcessor.match_result(file1, file2)
     puts @results
+
+
+
     # Отображать результаты в представлении compare
     respond_to do |format|
       format.turbo_stream { render turbo_stream: turbo_stream.append("results", partial: "projects/compare_results", locals: { results: @results }) }
