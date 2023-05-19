@@ -32,38 +32,10 @@
   </div>
 
 
-  <%# if !@project.new_record? %>
-<!--    <div class="mb-3">-->
-      <%#= form.label :files, "Прикрепленные файлы", class: "form-label" %>
-<!--      <table class="table">-->
-<!--        <thead>-->
-<!--        <tr>-->
-<!--          <th scope="col">Имя файла</th>-->
-<!--          <th scope="col">Скачать</th>-->
-<!--          <th scope="col">Просмотреть</th>-->
-<!--          <th scope="col">Дата загрузки</th>-->
-<!--        </tr>-->
-<!--        </thead>-->
-<!--        <tbody>-->
-        <%# @project.files.each do |file| %>
-<!--          <tr>-->
-<!--            <td><%#= file.filename %></td>-->
-<!--            <td><%#= link_to "Скачать", rails_blob_path(file, disposition: "attachment") %></td>-->
-<!--            <td><%#= link_to "Просмотреть", rails_blob_path(file), target: "_blank" %></td>-->
-<!--            <td><%#= file.created_at.to_s(:db) %></td>-->
-<!--          </tr>-->
-        <%# end %>
-<!--        </tbody>-->
-<!--      </table>-->
-<!--    </div>-->
-  <%# end %>
-
-
 <!--  <div class="mb-3">-->
     <%#= form.label :files, "Добавить файлы", class: "form-label" %>
     <%#= form.file_field :files, multiple: true, class: "form-control" %>
 <!--  </div>-->
-
 
 
   <div class="actions">

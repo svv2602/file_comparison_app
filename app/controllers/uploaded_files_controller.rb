@@ -25,7 +25,7 @@ class UploadedFilesController < ApplicationController
 
   def destroy
     @uploaded_file.destroy
-    redirect_to project_files_path(@project), notice: 'File was successfully destroyed.'
+    redirect_to edit_project_path(@project), notice: 'File was successfully destroyed.'
   end
 
   private
