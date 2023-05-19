@@ -12,13 +12,12 @@
 
   <body>
   <%= render 'layouts/header' %>
-  <div class="container container-fluid mt-5">
+  <div class="container container-fluid mt-5 page-content">
+    <% flash.each do |message_type, message| %>
+      <%= content_tag(:div, message, class: "alert alert-#{message_type}") %>
+    <% end %>
     <%= yield %>
   </div>
-  <style>
-      .page-content {
-          padding-top: 40px;
-      }
-  </style>
+
   </body>
 </html>

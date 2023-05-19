@@ -77,5 +77,5 @@ gem 'pdf-reader'
 gem 'bootstrap', '~> 5.0'
 gem 'jquery-rails'
 # gem "bootstrap-sass", "3.4.1"
-# gem "sassc-rails", "2.1.2"
+gem "sassc-rails", "2.1.2"
 

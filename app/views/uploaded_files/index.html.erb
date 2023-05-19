@@ -1,9 +1,23 @@
 <h1>Uploaded Files</h1>
 
-<%= link_to 'Upload New File', new_project_uploaded_file_path(@project) %>
+<table>
+  <thead>
+  <tr>
+    <th>File</th>
+    <th>Action</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @uploaded_files.each do |uploaded_file| %>
+    <tr>
+      <td><%= link_to uploaded_file.content.filename.to_s, url_for(uploaded_file.content) %></td>
+      <td>
+        <%= link_to 'Delete', project_file_path(@project, uploaded_file), method: :delete, data: { confirm: 'Are you sure?' } %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
 
-<% @uploaded_files.each do |uploaded_file| %>
-  <div>
-    <h2><%= link_to uploaded_file.file.filename, project_uploaded_file_path(@project, uploaded_file) %></h2>
-  </div>
-<% end %>
+<%= link_to 'New Uploaded File', new_project_file_path(@project) %>
+<%= link_to 'Back to Project', project_path(@project) %>

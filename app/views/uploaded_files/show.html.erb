@@ -1,4 +1,9 @@
-<h1><%= @uploaded_file.file.filename %></h1>
+<p id="notice"><%= notice %></p>
 
-<%= link_to 'Edit', edit_project_uploaded_file_path(@project, @uploaded_file) %>
-<%= link_to 'Back', project_uploaded_files_path(@project) %>
+<p>
+  <strong>Filename:</strong>
+  <%= @uploaded_file.content.filename %>
+</p>
+
+<%= link_to 'Delete', project_file_path(@project, @uploaded_file), method: :delete, data: { confirm: 'Are you sure?' } %>
+<%= link_to 'Back', project_files_path(@project) %>

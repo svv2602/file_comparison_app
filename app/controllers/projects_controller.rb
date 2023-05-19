@@ -2,7 +2,7 @@ require 'servis_pdf/pdf_processor'
 
 class ProjectsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_project, only: [:show, :edit, :update, :destroy, :compare]
+  before_action :set_project, only: [:show, :edit, :update, :destroy, :compare, :destroy_file]
 
   # GET /projects
   def index
@@ -51,27 +51,32 @@ class ProjectsController < ApplicationController
 
   def compare
     # Извлечь файлы из проекта по их ID
-
-    pdf_blob1 = ActiveStorage::Blob.find(params[:file1_id])
-    file1 = PdfProcessor.new(pdf_blob1.id)
-    pdf_blob2 = ActiveStorage::Blob.find(params[:file2_id])
-    file2 = PdfProcessor.new(pdf_blob2.id)
-
-
-
-    @results = PdfProcessor.match_result(file1, file2)
-    puts @results
+    if params[:file1_id].present? && params[:file2_id].present?
+      # pdf_blob1 = ActiveStorage::Blob.find(params[:file1_id])
+      # file1 = PdfProcessor.new(pdf_blob1.id)
+      # pdf_blob2 = ActiveStorage::Blob.find(params[:file2_id])
+      # file2 = PdfProcessor.new(pdf_blob2.id)
 
 
+      file1 = UploadedFile.find(params[:file1_id])
+      file2 = UploadedFile.find(params[:file2_id])
+      file1 = PdfProcessor.new(file1.content)
+      file2 = PdfProcessor.new(file2.content)
 
-    # Отображать результаты в представлении compare
-    respond_to do |format|
-      format.turbo_stream { render turbo_stream: turbo_stream.append("results", partial: "projects/compare_results", locals: { results: @results }) }
+      @results = PdfProcessor.match_result(file1, file2)
+      puts @results
+      # Отображать результаты в представлении compare
+      respond_to do |format|
+        format.turbo_stream { render turbo_stream: turbo_stream.append("results", partial: "projects/compare_results", locals: { results: @results }) }
+      end
+    else
+      flash[:alert] = "Пожалуйста, выберите оба файла для сравнения"
+      redirect_to @project
     end
-
   end
 
   private
+
   # Use callbacks to share common setup or constraints between actions.
   def set_project
     @project = current_user.projects.find(params[:id])
@@ -81,9 +86,8 @@ class ProjectsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def project_params
-    params.require(:project).permit(:name, files: [])
+    params.require(:project).permit(:name, :comment)
   end
-
 
 end
 

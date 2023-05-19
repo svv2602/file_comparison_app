@@ -8,22 +8,24 @@
     <th scope="col">Project Name</th>
     <th scope="col">Actions</th>
     <th scope="col"></th>
+    <th scope="col"></th>
   </tr>
   </thead>
   <tbody>
   <% @projects.each do |project| %>
     <tr>
-      <td><%= link_to project.name, project %></td>
+      <!--      <td><%#= link_to project.name, project %></td>-->
+      <td><%=  project.name %></td>
+      <td>
+        <%= link_to 'Show', project_path(project), class: 'btn btn-info' %>
+      </td>
       <td>
         <%= link_to 'Edit', edit_project_path(project), class: 'btn btn-warning' %>
       </td>
       <td>
         <%= button_to 'Delete', project_path(project), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
-
       </td>
     </tr>
   <% end %>
   </tbody>
 </table>
-
-
