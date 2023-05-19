@@ -57,8 +57,9 @@ class ProjectsController < ApplicationController
       file2 = UploadedFile.find(params[:file2_id])
       pdf_processor1 = PdfProcessor.new(file1.content)
       pdf_processor2 = PdfProcessor.new(file2.content)
-      puts " DEBUG === count_pages1= #{pdf_processor1.contains_text?}"
+
       puts " DEBUG === count_pages2= #{pdf_processor2.contains_text?}"
+      find_error_files(pdf_processor1, pdf_processor2)
 
       if pdf_processor1.contains_text? && pdf_processor2.contains_text?
         @results = PdfProcessor.match_result(pdf_processor1, pdf_processor2)
@@ -66,6 +67,9 @@ class ProjectsController < ApplicationController
         respond_to do |format|
           format.turbo_stream { render turbo_stream: turbo_stream.append("results", partial: "projects/compare_results", locals: { results: @results }) }
         end
+      else
+        flash[:alert] = find_error_files(pdf_processor1, pdf_processor2)
+        redirect_to @project
       end
     else
       flash[:alert] = "Пожалуйста, выберите оба файла для сравнения"
@@ -74,6 +78,18 @@ class ProjectsController < ApplicationController
   end
 
   private
+
+  def find_error_files(o1, o2)
+    case
+    when !o1.contains_text? && !o2.contains_text?
+      alert = "Оба файла не содержат текстового контента."
+    when !o1.contains_text? && o2.contains_text?
+      alert = "Первый файл  не содержит текстового контента."
+    when o1.contains_text? && !o2.contains_text?
+      alert = "Второй файл  не содержит текстового контента."
+    end
+    alert
+  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_project

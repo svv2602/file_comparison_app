@@ -49,7 +49,6 @@ class PdfProcessor
     end
 
     def match_result(o1, o2)
-
       result = hash_itog(o1, o2)
       find_key_in_hash(result, "arr_row2", "sum_all")
     end
