@@ -52,22 +52,20 @@ class ProjectsController < ApplicationController
   def compare
     # Извлечь файлы из проекта по их ID
     if params[:file1_id].present? && params[:file2_id].present?
-      # pdf_blob1 = ActiveStorage::Blob.find(params[:file1_id])
-      # file1 = PdfProcessor.new(pdf_blob1.id)
-      # pdf_blob2 = ActiveStorage::Blob.find(params[:file2_id])
-      # file2 = PdfProcessor.new(pdf_blob2.id)
-
 
       file1 = UploadedFile.find(params[:file1_id])
       file2 = UploadedFile.find(params[:file2_id])
-      file1 = PdfProcessor.new(file1.content)
-      file2 = PdfProcessor.new(file2.content)
+      pdf_processor1 = PdfProcessor.new(file1.content)
+      pdf_processor2 = PdfProcessor.new(file2.content)
+      puts " DEBUG === count_pages1= #{pdf_processor1.contains_text?}"
+      puts " DEBUG === count_pages2= #{pdf_processor2.contains_text?}"
 
-      @results = PdfProcessor.match_result(file1, file2)
-      puts @results
-      # Отображать результаты в представлении compare
-      respond_to do |format|
-        format.turbo_stream { render turbo_stream: turbo_stream.append("results", partial: "projects/compare_results", locals: { results: @results }) }
+      if pdf_processor1.contains_text? && pdf_processor2.contains_text?
+        @results = PdfProcessor.match_result(pdf_processor1, pdf_processor2)
+        # Отображать результаты в представлении compare
+        respond_to do |format|
+          format.turbo_stream { render turbo_stream: turbo_stream.append("results", partial: "projects/compare_results", locals: { results: @results }) }
+        end
       end
     else
       flash[:alert] = "Пожалуйста, выберите оба файла для сравнения"
@@ -86,7 +84,7 @@ class ProjectsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def project_params
-    params.require(:project).permit(:name, :comment)
+    params.require(:project).permit(:name, :comment, files: [])
   end
 
 end

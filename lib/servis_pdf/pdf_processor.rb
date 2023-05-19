@@ -1,9 +1,10 @@
 require 'pdf/reader'
+require 'stringio'
 require_relative 'arr_const'
 
 class PdfProcessor
-  def initialize(blob_id)
-    @pdf_blob = ActiveStorage::Blob.find(blob_id)
+  def initialize(uploaded_file)
+    @pdf_blob = uploaded_file
   end
 
   class << self
@@ -48,6 +49,7 @@ class PdfProcessor
     end
 
     def match_result(o1, o2)
+
       result = hash_itog(o1, o2)
       find_key_in_hash(result, "arr_row2", "sum_all")
     end
@@ -127,29 +129,44 @@ class PdfProcessor
 
   def count_pages
     count = 0
-    @pdf_blob.open do |file|
+    @pdf_blob.download do |file|
       PDF::Reader.new(file).pages.each do |_|
         count += 1
       end
     end
     count
   end
-
-  def extract_table_data
-    table_data = []
+  def contains_text?
+    contains_text = false
 
     @pdf_blob.open do |file|
       reader = PDF::Reader.new(file)
 
-      # Извлекаем данные из таблицы на каждой странице
       reader.pages.each do |page|
-        # Извлекаем строки таблицы с помощью регулярного выражения
-        rows = page.text.scan(/.+$/)
-
-        # Добавляем строки в общий массив
-        rows.each do |row|
-          table_data << row # if row =~ REG_VALUE_SIZE_TYPE1 || row =~ REG_VALUE_SIZE_TYPE2 || row =~ REG_VALUE_SIZE_TYPE3
+        text = page.text
+        if text.match?(/\S/) # Проверяем, содержит ли текст страницы непустые символы, отличные от пробелов
+          contains_text = true
+          break
         end
+      end
+    end
+
+    contains_text
+  end
+
+  def extract_table_data
+    table_data = []
+
+    reader = PDF::Reader.new(StringIO.new(@pdf_blob.download))
+
+    # Извлекаем данные из таблицы на каждой странице
+    reader.pages.each do |page|
+      # Извлекаем строки таблицы с помощью регулярного выражения
+      rows = page.text.scan(/.+$/)
+
+      # Добавляем строки в общий массив
+      rows.each do |row|
+        table_data << row
       end
     end
 
