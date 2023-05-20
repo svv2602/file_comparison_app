@@ -3,8 +3,12 @@
   <h1 class="mt-4">Comparison Results</h1>
   <% results.each do |result| %>
     <div class="mt-2">
-      <strong>Line:</strong> <%= result[0] %><br>
-      <strong>Match:</strong> <%= result[1]["row2"] %>
+      <strong>Line:</strong> <%=  result[0] %>
+      <strong>row1:</strong> <%= raw result[1]["row1"] %><br>
+      <strong>line_num:</strong> <%= result[1]["line_num"] %>
+      <strong>row2:</strong> <%= raw result[1]["row2"] %>
+      <strong>sum:</strong> <%= result[1]["sum"] %>
+      <strong>sum_all:</strong> <%= result[1]["sum_all"] %>
     </div>
   <% end %>
 

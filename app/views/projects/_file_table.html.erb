@@ -1,0 +1,30 @@
+<% if !project.new_record? %>
+  <div class="mb-3">
+    <table class="table">
+      <thead>
+      <tr>
+        <th scope="col">Имя файла</th>
+        <th scope="col">Скачать</th>
+        <th scope="col">Просмотреть</th>
+        <th scope="col">Дата загрузки</th>
+        <th scope="col">Удалить</th> <!-- Новая колонка -->
+      </tr>
+      </thead>
+      <tbody>
+      <% project.uploaded_files.each do |uploaded_file| %>
+        <tr>
+          <td><%= uploaded_file.content.filename %></td>
+          <td><%= link_to "Скачать", rails_blob_path(uploaded_file.content, disposition: "attachment") %></td>
+          <td><%= link_to "Просмотреть", rails_blob_path(uploaded_file.content), target: "_blank" %></td>
+          <td><%= uploaded_file.created_at.to_s(:db) %></td>
+          <td>
+            <%= button_to "Удалить", project_file_path(project, uploaded_file), method: :delete,
+                          data: { confirm: 'Вы уверены, что хотите удалить этот файл?' },
+                          class: 'btn btn-danger' %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>

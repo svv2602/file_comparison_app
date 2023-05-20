@@ -1,6 +1,7 @@
 require 'pdf/reader'
 require 'stringio'
 require_relative 'arr_const'
+require_relative 'string_processor'
 
 class PdfProcessor
   def initialize(uploaded_file)
@@ -50,8 +51,17 @@ class PdfProcessor
 
     def match_result(o1, o2)
       result = hash_itog(o1, o2)
-      find_key_in_hash(result, "arr_row2", "sum_all")
+      result = find_key_in_hash(result, "arr_row2", "sum_all")
+      result.each do |key, hash_in|
+        processor = StringProcessor.new(hash_in["row1"])
+        hash_out = processor.mark_common_words_with_html(hash_in["row2"])
+        hash_in["row1"] = hash_out[:str1]
+        hash_in["row2"] = hash_out[:str2]
+      end
+      result
     end
+
+
 
 
     def max_el_in_hash (hash, key_max)
@@ -77,6 +87,7 @@ class PdfProcessor
           if key == target_key
             max_element = {}
             max_element["row1"] = hash["row1"]
+
             hash_max_element = max_el_in_hash(value, key_max)
             hash_max_element.each do |key,value|
               max_element[key] = value

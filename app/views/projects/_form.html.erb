@@ -10,7 +10,13 @@
       </ul>
     </div>
   <% end %>
-
+  <div class="mb-3">
+    <% if @project.new_record? %>
+      <strong>Дата создания: </strong> <%= format_datetime(Time.current.localtime) %>
+    <% else %>
+      <strong>Последнее обновление: </strong> <%= format_datetime(@project.updated_at) %>
+    <% end %>
+  </div>
 
   <div class="mb-3">
     <%= form.label :name, "Наименование", class: "form-label" %>
@@ -23,22 +29,12 @@
   </div>
 
 
-  <div class="mb-3">
-  <% if @project.new_record? %>
-      <strong>Дата создания: </strong> <%= format_datetime(Time.current.localtime) %>
-  <% else %>
-      <strong>Последнее обновление: </strong> <%= format_datetime(@project.updated_at) %>
-  <% end %>
-  </div>
-
-
-<!--  <div class="mb-3">-->
-    <%#= form.label :files, "Добавить файлы", class: "form-label" %>
-    <%#= form.file_field :files, multiple: true, class: "form-control" %>
-<!--  </div>-->
-
 
   <div class="actions">
     <%= form.submit "Save", class: "btn btn-primary" %>
+    <% if !@project.new_record? %>
+      <%= link_to "Отмена", project_path(project), class: "btn btn-secondary" %>
+    <% end %>
+
   </div>
 <% end %>

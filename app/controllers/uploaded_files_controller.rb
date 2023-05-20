@@ -17,7 +17,7 @@ class UploadedFilesController < ApplicationController
     @uploaded_file = @project.uploaded_files.build(file_params)
     @uploaded_file.name = file_params[:content].original_filename
     if @uploaded_file.save
-      redirect_to project_files_path(@project), notice: 'File was successfully uploaded.'
+      redirect_to edit_project_path(@project), notice: 'File was successfully uploaded.'
     else
       render :new
     end
