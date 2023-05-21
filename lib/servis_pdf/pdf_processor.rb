@@ -1,7 +1,7 @@
 require 'pdf/reader'
 require 'stringio'
 require_relative 'arr_const'
-require_relative 'string_processor'
+
 
 class PdfProcessor
   def initialize(uploaded_file)

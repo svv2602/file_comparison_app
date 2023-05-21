@@ -1,5 +1,5 @@
 require 'servis_pdf/pdf_processor'
-require 'servis_pdf/string_processor'
+
 
 class ProjectsController < ApplicationController
   before_action :authenticate_user!
