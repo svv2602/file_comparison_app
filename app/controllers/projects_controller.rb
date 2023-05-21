@@ -64,7 +64,7 @@ class ProjectsController < ApplicationController
 
       if pdf_processor1.contains_text? && pdf_processor2.contains_text?
         @results = PdfProcessor.match_result(pdf_processor1, pdf_processor2)
-        puts @results
+        # puts @results
         # Отображать результаты в представлении compare
         respond_to do |format|
           format.turbo_stream { render turbo_stream: turbo_stream.append("results", partial: "projects/compare_results", locals: { results: @results }) }

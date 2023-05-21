@@ -54,9 +54,8 @@ class PdfProcessor
       result = find_key_in_hash(result, "arr_row2", "sum_all")
 
       result.each do |key, hash_in|
-        str1 = hash_in["row1"]
-        str2 = hash_in["row2"]
-        hash_out = mark_common_words_with_html(str1,str2)
+
+        hash_out = mark_common_words_with_html(hash_in["row1"],hash_in["row2"])
         hash_in["row1"] = hash_out[:str1]
         hash_in["row2"] = hash_out[:str2]
 
@@ -66,15 +65,14 @@ class PdfProcessor
     end
 
     def mark_common_words_with_html(str1,str2)
-      words1 = str1.split(/\s+/)
-      words2 = str2.split(/\s+/)
-      puts "DEBUG words1.inspect: #{words1.inspect}"
-      puts "DEBUG words2.inspect: #{words2.inspect}"
+      words1 = str1.split(/ /).reject(&:empty?).uniq
+      words2 = str2.split(/ /).reject(&:empty?).uniq
+
       words1.each do |word|
         if words2.include?(word) && !word.match(/<span.*<\/span>/)
           marked_word = "<span style='color:red;'>#{word}</span>"
-          str1 = str1.gsub(/\b#{word}\b/, marked_word)
-          str2 = str2.gsub(/\b#{word}\b/, marked_word)
+          str1 = str1.gsub(/(?<=\s|^)#{Regexp.escape(word)}(?=\s|$)/, marked_word)
+          str2 = str2.gsub(/(?<=\s|^)#{Regexp.escape(word)}(?=\s|$)/, marked_word)
         end
       end
 
