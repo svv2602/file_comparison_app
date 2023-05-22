@@ -4,15 +4,41 @@ require_relative 'arr_const'
 
 
 class PdfProcessor
-  def initialize(uploaded_file)
+  def initialize(uploaded_file, str_start , str_end )
     @pdf_blob = uploaded_file
+    @str_start = str_start.empty? ? 1 : str_start.to_i
+    @str_end = str_end.empty? ? line_count_from_pdf(uploaded_file) : str_end.to_i
+    puts "Debug str_end: #{@str_end}"
+
+    raise ArgumentError, "str_start should be less than or equal to str_end" if @str_start > @str_end
+  end
+
+
+
+  def line_count_from_pdf(uploaded_file)
+    count = 0
+    puts "Debug count start: #{count}"
+    reader = PDF::Reader.new(StringIO.new(uploaded_file.download))
+
+    reader.pages.each do |page|
+
+      rows = page.text.scan(/.+$/)
+      puts "Debug count: #{count}"
+      # Добавляем строки в общий массив
+      rows.each do |row|
+        count += 1
+      end
+    end
+    count == 0 ? 1 :count
+
   end
 
   class << self
     def hash_itog(o1, o2)
       array_of_hashes1 = o1.data_to_hash
       array_of_hashes2 = o2.data_to_hash
-
+      # puts "DEBUG array_of_hashes1 - #{array_of_hashes1}"
+      # puts "DEBUG array_of_hashes2 - #{array_of_hashes2}"
       result = {}
       array_of_hashes1.each_with_index do |hash_in_arr1, i|
         hash_row1 = {}
@@ -25,7 +51,7 @@ class PdfProcessor
             'sum_all' => 0
           }
           hash_in_arr1.each do |key, value|
-            if !value.empty? && hash_in_arr2[key] == value
+            if !value.to_s.empty? && hash_in_arr2[key] == value
               hash_row2['sum'] += 1
             end
 
@@ -54,11 +80,9 @@ class PdfProcessor
       result = find_key_in_hash(result, "arr_row2", "sum_all")
 
       result.each do |key, hash_in|
-
         hash_out = mark_common_words_with_html(hash_in["row1"],hash_in["row2"])
         hash_in["row1"] = hash_out[:str1]
         hash_in["row2"] = hash_out[:str2]
-
       end
 
       result
@@ -214,25 +238,34 @@ class PdfProcessor
   end
 
   def data_to_hash
-    #
+    i = 0
     table_data = extract_table_data
     arr_str = []
+
     table_data.each do |row|
-      arr_column = { :row => row, :problems => "" }
-      columns = row.split(/\s+/)
-      columns.each do |column|
-        h = recognize_properties(column)
-        if h == {}
-          arr_column[:problems] = (arr_column[:problems] == "" ? column : "#{arr_column[:problems]} #{column}")
-        else
-          h.each do |key, value|
-            arr_column[valid_key_for_hash(arr_column, key)] = value
+      i += 1
+
+      if i <= @str_end && i >= @str_start
+        arr_column = { row: row, problems: "", num_str: i }
+        columns = row.split(/\s+/)
+
+        columns.each do |column|
+          h = recognize_properties(column)
+
+          if h.empty?
+            arr_column[:problems] = (arr_column[:problems].empty? ? column : "#{arr_column[:problems]} #{column}")
+          else
+            h.each do |key, value|
+              arr_column[valid_key_for_hash(arr_column, key)] = value
+            end
           end
         end
+
+        arr_str << arr_column
       end
-      arr_str << arr_column
     end
-    return arr_str
+
+    arr_str
   end
 
   def valid_key_for_hash(hash, key)

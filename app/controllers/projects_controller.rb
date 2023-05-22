@@ -1,6 +1,5 @@
 require 'servis_pdf/pdf_processor'
 
-
 class ProjectsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_project, only: [:show, :edit, :update, :destroy, :compare, :destroy_file]
@@ -51,31 +50,38 @@ class ProjectsController < ApplicationController
   end
 
   def compare
-    # Извлечь файлы из проекта по их ID
-    if params[:file1_id].present? && params[:file2_id].present?
+    begin
+      @results = nil
+      # Извлечь файлы из проекта по их ID
+      if params[:file1_id].present? && params[:file2_id].present?
 
-      file1 = UploadedFile.find(params[:file1_id])
-      file2 = UploadedFile.find(params[:file2_id])
-      pdf_processor1 = PdfProcessor.new(file1.content)
-      pdf_processor2 = PdfProcessor.new(file2.content)
+        file1 = UploadedFile.find(params[:file1_id])
+        file2 = UploadedFile.find(params[:file2_id])
+        start_line1 = params[:start_line1]
+        end_line1 = params[:end_line1]
+        start_line2 = params[:start_line2]
+        end_line2 = params[:end_line2]
+        pdf_processor1 = PdfProcessor.new(file1.content, start_line1, end_line1)
+        pdf_processor2 = PdfProcessor.new(file2.content, start_line2, end_line2)
 
-      # puts " DEBUG === count_pages2= #{pdf_processor2.contains_text?}"
-      find_error_files(pdf_processor1, pdf_processor2)
-
-      if pdf_processor1.contains_text? && pdf_processor2.contains_text?
-        @results = PdfProcessor.match_result(pdf_processor1, pdf_processor2)
-        # puts @results
-        # Отображать результаты в представлении compare
-        respond_to do |format|
-          format.turbo_stream { render turbo_stream: turbo_stream.append("results", partial: "projects/compare_results", locals: { results: @results }) }
+        if pdf_processor1.contains_text? && pdf_processor2.contains_text?
+          @results = PdfProcessor.match_result(pdf_processor1, pdf_processor2)
+          respond_to do |format|
+            format.turbo_stream { render turbo_stream: turbo_stream.append("results", partial: "projects/compare_results", locals: { results: @results }) }
+          end
+        else
+          flash[:alert] = find_error_files(pdf_processor1, pdf_processor2)
+          redirect_to @project
         end
       else
-        flash[:alert] = find_error_files(pdf_processor1, pdf_processor2)
+        flash[:alert] = "Пожалуйста, выберите файлы для сравнения"
         redirect_to @project
       end
-    else
-      flash[:alert] = "Пожалуйста, выберите оба файла для сравнения"
+
+    rescue ArgumentError => e
+      flash[:error] = e.message
       redirect_to @project
+      return
     end
   end
 

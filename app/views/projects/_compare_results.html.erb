@@ -1,17 +1,33 @@
 <!--app/views/projects/_compare_results.html.erb-->
 <% if results.present? %>
   <h1 class="mt-4">Comparison Results</h1>
-  <% results.each do |result| %>
-    <div class="mt-2">
-      <strong>Line:</strong> <%=  result[0] %>
-      <strong>row1:</strong> <%= raw result[1]["row1"] %><br>
-      <strong>line_num:</strong> <%= result[1]["line_num"] %>
-      <strong>row2:</strong> <%= raw result[1]["row2"] %>
-      <strong>sum:</strong> <%= result[1]["sum"] %>
-      <strong>sum_all:</strong> <%= result[1]["sum_all"] %>
-    </div>
-  <% end %>
-
-  <%= link_to 'очистить', @project, class: "btn btn-secondary mt-4" %>
+  <table class="table table-bordered mt-2">
+    <thead>
+    <tr>
+      <th>Line</th>
+      <th>row1</th>
+      <th>line_num</th>
+      <th>row2</th>
+      <th>sum</th>
+      <th>sum_all</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% results.each do |result| %>
+      <tr>
+        <td><%= result[0] %></td>
+        <td><%= raw result[1]["row1"] %></td>
+        <td><%= result[1]["line_num"] %></td>
+        <td><%= raw result[1]["row2"] %></td>
+        <td><%= result[1]["sum"] %></td>
+        <td><%= result[1]["sum_all"] %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+  <div class="mt-3">
+    <%= link_to 'очистить', @project, class: "btn btn-secondary mt-4" %>
+  </div>
 
 <% end %>
+
