@@ -62,6 +62,8 @@ class PdfProcessor
           result_compare_strings = compare_strings(str1, str2)
           hash_row2['sum_all'] = result_compare_strings
           hash_row2['row2'] = "" if result_compare_strings == 0
+          hash_row2['num_str1'] = hash_in_arr1[:num_str]
+          hash_row2['num_str2'] = hash_in_arr2[:num_str]
 
           hash_row1["#{j + 1}"] = hash_row2
         end

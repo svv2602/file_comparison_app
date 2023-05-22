@@ -4,10 +4,10 @@
   <table class="table table-bordered mt-2">
     <thead>
     <tr>
-      <th>Line</th>
-      <th>row1</th>
-      <th>line_num</th>
-      <th>row2</th>
+      <th>№</th>
+      <th>строка </th>
+      <th>№</th>
+      <th>результат</th>
       <th>sum</th>
       <th>sum_all</th>
     </tr>
@@ -15,9 +15,9 @@
     <tbody>
     <% results.each do |result| %>
       <tr>
-        <td><%= result[0] %></td>
+        <td><%= result[1]["num_str1"] %></td>
         <td><%= raw result[1]["row1"] %></td>
-        <td><%= result[1]["line_num"] %></td>
+        <td><%= result[1]["num_str2"] %></td>
         <td><%= raw result[1]["row2"] %></td>
         <td><%= result[1]["sum"] %></td>
         <td><%= result[1]["sum_all"] %></td>
