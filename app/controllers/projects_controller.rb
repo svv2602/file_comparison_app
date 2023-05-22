@@ -93,9 +93,9 @@ class ProjectsController < ApplicationController
     when !o1.contains_text? && !o2.contains_text?
       alert = "Оба файла не содержат текстового контента."
     when !o1.contains_text? && o2.contains_text?
-      alert = "Первый файл  не содержит текстового контента."
+      alert = "Первый файл #{o1.instance_variable_get(:@pdf_blob).record.name} не содержит текстового контента."
     when o1.contains_text? && !o2.contains_text?
-      alert = "Второй файл  не содержит текстового контента."
+      alert = "Второй файл #{o2.instance_variable_get(:@pdf_blob).record.name} не содержит текстового контента."
     end
     alert
   end

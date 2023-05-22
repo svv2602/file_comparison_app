@@ -8,7 +8,6 @@ class PdfProcessor
     @pdf_blob = uploaded_file
     @str_start = str_start.empty? ? 1 : str_start.to_i
     @str_end = str_end.empty? ? line_count_from_pdf(uploaded_file) : str_end.to_i
-    puts "Debug str_end: #{@str_end}"
 
     raise ArgumentError, "str_start should be less than or equal to str_end" if @str_start > @str_end
   end
@@ -17,13 +16,11 @@ class PdfProcessor
 
   def line_count_from_pdf(uploaded_file)
     count = 0
-    puts "Debug count start: #{count}"
     reader = PDF::Reader.new(StringIO.new(uploaded_file.download))
 
     reader.pages.each do |page|
 
       rows = page.text.scan(/.+$/)
-      puts "Debug count: #{count}"
       # Добавляем строки в общий массив
       rows.each do |row|
         count += 1
@@ -96,9 +93,12 @@ class PdfProcessor
 
       words1.each do |word|
         if words2.include?(word) && !word.match(/<span.*<\/span>/)
-          marked_word = "<span style='color:red;'>#{word}</span>"
+          marked_word = "<strong><span style='color: yellow; background-color: green;'>#{word}</span></strong>"
           str1 = str1.gsub(/(?<=\s|^)#{Regexp.escape(word)}(?=\s|$)/, marked_word)
           str2 = str2.gsub(/(?<=\s|^)#{Regexp.escape(word)}(?=\s|$)/, marked_word)
+        else
+          marked_word = "<span style='color: red;'>#{word}</span>"
+          str1 = str1.gsub(/(?<=\s|^)#{Regexp.escape(word)}(?=\s|$)/, marked_word)
         end
       end
 
