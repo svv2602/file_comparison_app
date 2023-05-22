@@ -5,34 +5,45 @@
   padding-top: 50px;
 }
 
-body {
-  alert {
-    margin-bottom: 15px;
-    padding: 15px;
-  }
-
-  alert-success {
-    color: #155724;
-    background-color: #d4edda;
-    border-color: #c3e6cb;
-  }
-
-  .alert-danger {
-    color: #721c24;
-    background-color: #f8d7da;
-    border-color: #f5c6cb;
-  }
-
-  .alert-info {
-    color: #0c5460;
-    background-color: #d1ecf1;
-    border-color: #bee5eb;
-  }
-
-  .alert-warning {
-    color: #856404;
-    background-color: #fff3cd;
-    border-color: #ffeeba;
-  }
+.alert {
+  margin-bottom: 15px;
+  padding: 15px;
 }
+
+.alert-success {
+  color: #155724;
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+}
+
+.alert-danger {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}
+
+.alert-info {
+  color: #0c5460;
+  background-color: #d1ecf1;
+  border-color: #bee5eb;
+}
+
+.alert-warning {
+  color: #856404;
+  background-color: #fff3cd;
+  border-color: #ffeeba;
+}
+
+select {
+  font: inherit;
+  letter-spacing: inherit;
+  word-spacing: inherit;
+  //-moz-appearance: none;
+  //-webkit-appearance: none;
+  height: 38px;
+  //appearance: none;
+  //border: 0.1em solid;
+  //padding: 0 0.2em;
+}
+
 

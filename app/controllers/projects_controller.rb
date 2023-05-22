@@ -28,8 +28,10 @@ class ProjectsController < ApplicationController
     @project = current_user.projects.build(project_params)
 
     if @project.save
-      redirect_to @project, notice: 'Project was successfully created.'
+      flash[:success] = 'Проект успешно обновлен.'
+      redirect_to @project
     else
+      flash.now[:warning] = 'Ошибка при создании проекта.'
       render :new
     end
   end
@@ -37,8 +39,10 @@ class ProjectsController < ApplicationController
   # PATCH/PUT /projects/1
   def update
     if @project.update(project_params)
-      redirect_to @project, notice: 'Project was successfully updated.'
+      flash[:success] = 'Проект успешно обновлен.'
+      redirect_to @project
     else
+      flash.now[:warning] = 'Ошибка при обновлении проекта.'
       render :edit
     end
   end
@@ -46,7 +50,7 @@ class ProjectsController < ApplicationController
   # DELETE /projects/1
   def destroy
     @project.destroy
-    redirect_to projects_url, notice: 'Project was successfully destroyed.'
+    redirect_to projects_url, notice: 'Проект успешно удален.'
   end
 
   def compare
@@ -71,16 +75,16 @@ class ProjectsController < ApplicationController
             format.turbo_stream { render turbo_stream: turbo_stream.append("results", partial: "projects/compare_results", locals: { results: @results }) }
           end
         else
-          flash[:alert] = find_error_files(pdf_processor1, pdf_processor2)
+          flash[:danger] = find_error_files(pdf_processor1, pdf_processor2)
           redirect_to @project
         end
       else
-        flash[:alert] = "Пожалуйста, выберите файлы для сравнения"
+        flash[:warning] = "Пожалуйста, выберите файлы для сравнения"
         redirect_to @project
       end
 
     rescue ArgumentError => e
-      flash[:error] = e.message
+      flash[:danger] = e.message
       redirect_to @project
       return
     end
@@ -91,13 +95,13 @@ class ProjectsController < ApplicationController
   def find_error_files(o1, o2)
     case
     when !o1.contains_text? && !o2.contains_text?
-      alert = "Оба файла не содержат текстового контента."
+      txt = "Оба файла не содержат текстового контента."
     when !o1.contains_text? && o2.contains_text?
-      alert = "Первый файл #{o1.instance_variable_get(:@pdf_blob).record.name} не содержит текстового контента."
+      txt = "Первый файл <#{o1.instance_variable_get(:@pdf_blob).record.name}>  не содержит текстового контента."
     when o1.contains_text? && !o2.contains_text?
-      alert = "Второй файл #{o2.instance_variable_get(:@pdf_blob).record.name} не содержит текстового контента."
+      txt = "Второй файл <#{o2.instance_variable_get(:@pdf_blob).record.name}>  не содержит текстового контента."
     end
-    alert
+    txt
   end
 
   # Use callbacks to share common setup or constraints between actions.

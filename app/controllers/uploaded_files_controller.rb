@@ -17,15 +17,18 @@ class UploadedFilesController < ApplicationController
     @uploaded_file = @project.uploaded_files.build(file_params)
     @uploaded_file.name = file_params[:content].original_filename
     if @uploaded_file.save
-      redirect_to edit_project_path(@project), notice: 'File was successfully uploaded.'
+      flash[:success] = 'Файл успешно добавлен в проект.'
+      redirect_to edit_project_path(@project)
     else
+      flash.now[:info] = 'Файл не был добавлен в проект.'
       render :new
     end
   end
 
   def destroy
     @uploaded_file.destroy
-    redirect_to edit_project_path(@project), notice: 'File was successfully destroyed.'
+    flash[:success] = 'Файл был успешно удален из проекта.'
+    redirect_to edit_project_path(@project)
   end
 
   private
