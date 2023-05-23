@@ -54,6 +54,7 @@ class ProjectsController < ApplicationController
   end
 
   def compare
+
     begin
       @results = nil
       # Извлечь файлы из проекта по их ID
@@ -70,7 +71,7 @@ class ProjectsController < ApplicationController
 
         if pdf_processor1.contains_text? && pdf_processor2.contains_text?
           @results = PdfProcessor.match_result(pdf_processor1, pdf_processor2)
-          puts @results
+
           respond_to do |format|
             format.turbo_stream { render turbo_stream: turbo_stream.append("results", partial: "projects/compare_results", locals: { results: @results }) }
           end
@@ -84,10 +85,13 @@ class ProjectsController < ApplicationController
       end
 
     rescue ArgumentError => e
+      flash.clear
       flash[:danger] = e.message
       redirect_to @project
       return
     end
+
+
   end
 
   private

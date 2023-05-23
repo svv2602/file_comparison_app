@@ -1,3 +1,7 @@
+<turbo-frame id="flash-messages">
+  <%= turbo_stream_from 'flash-messages' %>
+</turbo-frame>
+
 <h1>Новая группа документов</h1>
 
 <%= render 'form', project: @project %>

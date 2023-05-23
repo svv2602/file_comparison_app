@@ -1,4 +1,9 @@
 <!--app/views/projects/_compare_results.html.erb-->
+<turbo-frame id="flash-messages">
+  <%= turbo_stream_from 'flash-messages' %>
+</turbo-frame>
+
+
 <% if results.present? %>
   <h1 class="mt-4">Comparison Results</h1>
   <table class="table table-bordered mt-2">

@@ -2,39 +2,39 @@
   <div class="row align-items-center">
     <div class="col">
       <div class="form-group">
-        <%= form.label :file1_id, 'File 1' %>
+        <%= form.label :file1_id, 'Файл, содержащий шаблонные строки ' %>
         <%= form.select :file1_id, options_from_collection_for_select(@project.uploaded_files, 'id', proc { |uf| uf.content.filename.to_s }),
                         prompt: 'Выберите файл', class: 'form-control ' %>
       </div>
     </div>
     <div class="col">
       <div class="form-group">
-        <%= form.label :start_line1, 'Start Line for File 1' %>
+        <%= form.label :start_line1, 'Начальная строка для сравнения, №' %>
         <%= form.number_field :start_line1, class: 'form-control' %>
       </div>
     </div>
     <div class="col">
       <div class="form-group">
-        <%= form.label :end_line1, 'End Line for File 1' %>
+        <%= form.label :end_line1, 'Последняя строка для сравнения, №' %>
         <%= form.number_field :end_line1, class: 'form-control' %>
       </div>
     </div>
     <div class="col">
       <div class="form-group">
-        <%= form.label :file2_id, 'File 2' %>
+        <%= form.label :file2_id, 'Файл, в котором находятся строки для поиска' %>
         <%= form.select :file2_id, options_from_collection_for_select(@project.uploaded_files, 'id', proc { |uf| uf.content.filename.to_s }),
                         prompt: 'Выберите файл', class: 'form-control' %>
       </div>
     </div>
     <div class="col">
       <div class="form-group">
-        <%= form.label :start_line2, 'Start Line for File 2' %>
+        <%= form.label :start_line2, 'Начальная строка для сравнения, №' %>
         <%= form.number_field :start_line2, class: 'form-control' %>
       </div>
     </div>
     <div class="col">
       <div class="form-group">
-        <%= form.label :end_line2, 'End Line for File 2' %>
+        <%= form.label :end_line2, 'Последняя строка для сравнения, №' %>
         <%= form.number_field :end_line2, class: 'form-control' %>
       </div>
     </div>

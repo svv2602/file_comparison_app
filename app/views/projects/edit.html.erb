@@ -1,3 +1,7 @@
+<turbo-frame id="flash-messages">
+  <%= turbo_stream_from 'flash-messages' %>
+</turbo-frame>
+
 <h1>Группа документов: <%= @project.name %></h1>
 <%= render 'file_table', project: @project %>
 <%#= link_to 'Add Files', new_project_file_path(@project), class: "btn btn-primary" %>

@@ -1,5 +1,7 @@
 <h1>Edit File</h1>
-
+<turbo-frame id="flash-messages">
+  <%= turbo_stream_from 'flash-messages' %>
+</turbo-frame>
 
 <%= render 'form', project: @project, uploaded_file: @uploaded_file %>
 
