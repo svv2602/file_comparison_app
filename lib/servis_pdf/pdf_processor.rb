@@ -114,11 +114,11 @@ class PdfProcessor
       when 0..50
         style = "style='color: red; background-color: yellow;'"
       when 51..70
-        style = "style='color: orange; background-color: yellow;'"
+        style = "style='color: blue; background-color: yellow;'"
       when 71..88
-        style = "style='color: green; '"
+        style = "style='color: white;  background-color: green;'"
       when 89..100
-        style = "style='color: blue;'"
+        style = "style='color: yellow; background-color: green;'"
       end
 
       return "<strong><span #{style}>#{percent}%</span></strong>"
