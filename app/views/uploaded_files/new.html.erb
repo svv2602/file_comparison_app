@@ -1,12 +1,8 @@
-<turbo-frame id="flash-messages">
-  <%= turbo_stream_from 'flash-messages' %>
-</turbo-frame>
 <h2>Добавление файлов в группу документов</h2>
 <h1><%= @project.name %></h1>
 
 <%= form_with(model: [ @project, @uploaded_file ], url: project_files_path(@project), local: true, target: "new_file", class: "needs-validation", novalidate: true) do |form| %>
   <div class="mb-3">
-    <%#= form.label :content, class: "form-label" %>
     <%= form.file_field :content, class: "form-control", required: true %>
     <div class="invalid-feedback">Выберите файл для загрузки.</div>
   </div>

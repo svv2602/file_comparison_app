@@ -5,18 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e55cbc29-08c5-47ad-bbbf-a7cfe43b1207" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app/views/shared/_show_pagination.html.erb" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/initializers/pagy.rb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Gemfile" beforeDir="false" afterPath="$PROJECT_DIR$/Gemfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Gemfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Gemfile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/assets/stylesheets/custom.css.scss" beforeDir="false" afterPath="$PROJECT_DIR$/app/assets/stylesheets/custom.css.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/controllers/application_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/application_controller.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/controllers/projects_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/projects_controller.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/helpers/application_helper.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/helpers/application_helper.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/layouts/application.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/layouts/application.html.erb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/projects/index.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/projects/index.html.erb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/servis_pdf/pdf_processor.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/servis_pdf/pdf_processor.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/controllers/uploaded_files_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/uploaded_files_controller.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/shared/_flash_messages.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/shared/_flash_messages.html.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/uploaded_files/_form.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/uploaded_files/_form.html.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/uploaded_files/new.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/uploaded_files/new.html.erb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

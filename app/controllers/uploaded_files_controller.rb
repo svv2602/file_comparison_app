@@ -16,8 +16,15 @@ class UploadedFilesController < ApplicationController
   def create
     @uploaded_file = @project.uploaded_files.build(file_params)
     @uploaded_file.name = file_params[:content].original_filename
+
+
     if @uploaded_file.save
-      flash[:success] = 'Файл успешно добавлен в проект.'
+      if file_params[:content].content_type != "application/pdf"
+        flash[:danger] = "Файл без расширения PDF добавлен в проект.  Для него не будет доступно сравнение."
+      else
+        flash[:success] = 'Файл успешно добавлен в проект.'
+      end
+
       redirect_to edit_project_path(@project)
     else
       flash.now[:info] = 'Файл не был добавлен в проект.'
