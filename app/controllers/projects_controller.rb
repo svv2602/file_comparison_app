@@ -7,6 +7,8 @@ class ProjectsController < ApplicationController
   # GET /projects
   def index
     @projects = current_user.projects
+    @pagy, @projects = pagy(@projects)
+    @show_pagination = @projects.count > @pagy.items
   end
 
   # GET /projects/1

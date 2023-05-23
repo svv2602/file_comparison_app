@@ -2,9 +2,8 @@ require 'pdf/reader'
 require 'stringio'
 require_relative 'arr_const'
 
-
 class PdfProcessor
-  def initialize(uploaded_file, str_start , str_end )
+  def initialize(uploaded_file, str_start, str_end)
     @pdf_blob = uploaded_file
     @str_start = str_start.empty? ? 1 : str_start.to_i
     @str_end = str_end.empty? ? line_count_from_pdf(uploaded_file) : str_end.to_i
@@ -12,21 +11,15 @@ class PdfProcessor
     raise ArgumentError, "str_start should be less than or equal to str_end" if @str_start > @str_end
   end
 
-
-
   def line_count_from_pdf(uploaded_file)
     count = 0
     reader = PDF::Reader.new(StringIO.new(uploaded_file.download))
 
     reader.pages.each do |page|
-
       rows = page.text.scan(/.+$/)
-      # Добавляем строки в общий массив
-      rows.each do |row|
-        count += 1
-      end
+      rows.each { |row| count += 1 }
     end
-    count == 0 ? 1 :count
+    count == 0 ? 1 : count
 
   end
 
@@ -34,8 +27,7 @@ class PdfProcessor
     def hash_itog(o1, o2)
       array_of_hashes1 = o1.data_to_hash
       array_of_hashes2 = o2.data_to_hash
-      # puts "DEBUG array_of_hashes1 - #{array_of_hashes1}"
-      # puts "DEBUG array_of_hashes2 - #{array_of_hashes2}"
+
       result = {}
       array_of_hashes1.each_with_index do |hash_in_arr1, i|
         hash_row1 = {}
@@ -79,7 +71,7 @@ class PdfProcessor
       result = find_key_in_hash(result, "arr_row2", "sum_all")
 
       result.each do |key, hash_in|
-        hash_out = mark_common_words_with_html(hash_in["row1"],hash_in["row2"])
+        hash_out = mark_common_words_with_html(hash_in["row1"], hash_in["row2"])
         hash_in["row1"] = hash_out[:str1]
         hash_in["row2"] = hash_out[:str2]
       end
@@ -87,7 +79,7 @@ class PdfProcessor
       result
     end
 
-    def mark_common_words_with_html(str1,str2)
+    def mark_common_words_with_html(str1, str2)
       words1 = str1.split(/ /).reject(&:empty?).uniq
       words2 = str2.split(/ /).reject(&:empty?).uniq
 
@@ -104,7 +96,6 @@ class PdfProcessor
 
       { str1: str1, str2: str2 }
     end
-
 
     def max_el_in_hash (hash, key_max)
       # h - хеш, key_hash - ключ вложенного хеша, key_find - ключ для поиска
@@ -131,7 +122,7 @@ class PdfProcessor
             max_element["row1"] = hash["row1"]
 
             hash_max_element = max_el_in_hash(value, key_max)
-            hash_max_element.each do |key,value|
+            hash_max_element.each do |key, value|
               max_element[key] = value
             end
 
@@ -148,8 +139,10 @@ class PdfProcessor
     end
 
     def compare_strings(str1, str2)
-      words1 = str1.split(/\W+/) # Разделение строки 1 на слова
-      words2 = str2.split(/\W+/) # Разделение строки 2 на слова
+      # words1 = str1.split(/\W+/) # Разделение строки 1 на слова
+      # words2 = str2.split(/\W+/) # Разделение строки 2 на слова
+      words1 = str1.split(/ /).reject(&:empty?).uniq
+      words2 = str2.split(/ /).reject(&:empty?).uniq
 
       word_counts1 = count_word_occurrences(words1) # Подсчет использований слов в строке 1
       word_counts2 = count_word_occurrences(words2) # Подсчет использований слов в строке 2
@@ -188,6 +181,7 @@ class PdfProcessor
     end
     count
   end
+
   def contains_text?
     contains_text = false
 

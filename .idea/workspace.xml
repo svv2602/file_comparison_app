@@ -5,19 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e55cbc29-08c5-47ad-bbbf-a7cfe43b1207" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/app/views/shared/_show_pagination.html.erb" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config/initializers/pagy.rb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Gemfile" beforeDir="false" afterPath="$PROJECT_DIR$/Gemfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Gemfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Gemfile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/assets/stylesheets/custom.css.scss" beforeDir="false" afterPath="$PROJECT_DIR$/app/assets/stylesheets/custom.css.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/controllers/application_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/application_controller.rb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/controllers/projects_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/projects_controller.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/helpers/application_helper.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/helpers/application_helper.rb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/views/layouts/application.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/layouts/application.html.erb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/projects/_compare_form.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/projects/_compare_form.html.erb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/projects/_compare_results.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/projects/_compare_results.html.erb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/projects/compare.turbo_stream.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/projects/compare.turbo_stream.erb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/projects/edit.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/projects/edit.html.erb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/projects/new.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/projects/new.html.erb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/projects/show.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/projects/show.html.erb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/uploaded_files/edit.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/uploaded_files/edit.html.erb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/uploaded_files/index.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/uploaded_files/index.html.erb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/uploaded_files/new.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/uploaded_files/new.html.erb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/uploaded_files/show.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/uploaded_files/show.html.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/projects/index.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/projects/index.html.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/servis_pdf/pdf_processor.rb" beforeDir="false" afterPath="$PROJECT_DIR$/lib/servis_pdf/pdf_processor.rb" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,7 +42,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/home/user/RubymineProjects/myProject/FileComparisonApp",
+    "last_opened_file_path": "/home/user/RubymineProjects/myProject/FileComparisonApp/config/initializers",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -56,6 +55,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/config/initializers" />
       <recent name="$PROJECT_DIR$/lib/servis_pdf" />
       <recent name="$PROJECT_DIR$/lib" />
     </key>
