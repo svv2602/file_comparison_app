@@ -66,14 +66,25 @@ class PdfProcessor
       result
     end
 
-    def match_result(o1, o2)
+    def match_result(o1, o2, percent)
       result = hash_itog(o1, o2)
       result = find_key_in_hash(result, "arr_row2", "sum_all")
 
       result.each do |key, hash_in|
-        hash_out = mark_common_words_with_html(hash_in["row1"], hash_in["row2"])
-        hash_in["row1"] = hash_out[:str1]
-        hash_in["row2"] = hash_out[:str2]
+        row1 = hash_in["row1"]
+        row2 = hash_in["row2"]
+        sum_all = compare_strings_char(row1, row2)
+        if sum_all.to_f >= percent
+          hash_out = mark_common_words_with_html(row1, row2)
+          hash_in["row1"] = hash_out[:str1]
+          hash_in["row2"] = hash_out[:str2]
+          hash_in["sum_all"] = format_percent(sum_all)
+        else
+          hash_in["row2"] = ""
+          hash_in["sum_all"] = ""
+          hash_in["num_str2"] = ""
+        end
+
       end
 
       result
@@ -82,7 +93,6 @@ class PdfProcessor
     def mark_common_words_with_html(str1, str2)
       words1 = str1.split(/ /).reject(&:empty?).uniq
       words2 = str2.split(/ /).reject(&:empty?).uniq
-
       words1.each do |word|
         if words2.include?(word) && !word.match(/<span.*<\/span>/)
           marked_word = "<strong><span style='color: yellow; background-color: green;'>#{word}</span></strong>"
@@ -95,6 +105,43 @@ class PdfProcessor
       end
 
       { str1: str1, str2: str2 }
+    end
+
+    def format_percent(percent)
+      style = ""
+
+      case percent.to_f
+      when 0..50
+        style = "style='color: red; background-color: yellow;'"
+      when 51..70
+        style = "style='color: orange; background-color: yellow;'"
+      when 71..88
+        style = "style='color: green; '"
+      when 89..100
+        style = "style='color: blue;'"
+      end
+
+      return "<strong><span #{style}>#{percent}%</span></strong>"
+    end
+
+    def compare_strings_char(str1, str2)
+      words1 = str1.split(/ /).reject(&:empty?).uniq
+      words2 = str2.split(/ /).reject(&:empty?).uniq
+
+      word_counts1 = count_word_occurrences(words1) # Подсчет использований слов в строке 1
+      word_counts2 = count_word_occurrences(words2) # Подсчет использований слов в строке 2
+
+      i = 0
+      j = 0
+      word_counts1.each do |word, count1|
+        count2 = word_counts2[word] || 0 # Получение количества использований слова в строке 2
+        count2 = count2 < count1 ? count2 : count1
+        j += word.size * count2
+        i += word.size * count1
+      end
+
+      result = j / i.to_f * 100
+      sprintf('%.2f', result)
     end
 
     def max_el_in_hash (hash, key_max)
@@ -163,7 +210,7 @@ class PdfProcessor
       word_counts = Hash.new(0)
 
       words.each do |word|
-        next if word =~ /^\d+$/ || word.empty? || word =~ /#{VALUE_SERVICE_PARTS_ALL}/ || word =~ /#{VALUE_CURRENCY.join("|")}/
+        # next if word =~ /^\d+$/ || word.empty? || word =~ /#{VALUE_SERVICE_PARTS_ALL}/ || word =~ /#{VALUE_CURRENCY.join("|")}/
         word_counts[word] += 1
       end
 

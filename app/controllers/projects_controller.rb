@@ -68,11 +68,12 @@ class ProjectsController < ApplicationController
         end_line1 = params[:end_line1]
         start_line2 = params[:start_line2]
         end_line2 = params[:end_line2]
+        percent = params[:percent].to_i
         pdf_processor1 = PdfProcessor.new(file1.content, start_line1, end_line1)
         pdf_processor2 = PdfProcessor.new(file2.content, start_line2, end_line2)
 
         if pdf_processor1.contains_text? && pdf_processor2.contains_text?
-          @results = PdfProcessor.match_result(pdf_processor1, pdf_processor2)
+          @results = PdfProcessor.match_result(pdf_processor1, pdf_processor2, percent)
 
           respond_to do |format|
             format.turbo_stream { render turbo_stream: turbo_stream.append("results", partial: "projects/compare_results", locals: { results: @results }) }

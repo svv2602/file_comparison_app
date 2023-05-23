@@ -4,10 +4,8 @@
 
 <h1>Группа документов: <%= @project.name %></h1>
 <%= render 'file_table', project: @project %>
-<%#= link_to 'Add Files', new_project_file_path(@project), class: "btn btn-primary" %>
 
-  <%= link_to 'Add Files', new_project_file_path(@project), class: "btn btn-primary", target: "new_file" %>
-
+<%= link_to 'Add Files', new_project_file_path(@project), class: "btn btn-primary", target: "new_file" %>
 
 <%= render 'form', project: @project %>
 

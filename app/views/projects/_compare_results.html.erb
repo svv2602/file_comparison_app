@@ -9,12 +9,11 @@
   <table class="table table-bordered mt-2">
     <thead>
     <tr>
-      <th>№</th>
-      <th>строка </th>
-      <th>№</th>
-      <th>результат</th>
-      <th>sum</th>
-      <th>sum_all</th>
+      <th>№ стр</th>
+      <th>строка для поиска</th>
+      <th>№ стр</th>
+      <th>результат поиска</th>
+      <th>% совпадений</th>
     </tr>
     </thead>
     <tbody>
@@ -24,8 +23,7 @@
         <td><%= raw result[1]["row1"] %></td>
         <td><%= result[1]["num_str2"] %></td>
         <td><%= raw result[1]["row2"] %></td>
-        <td><%= result[1]["sum"] %></td>
-        <td><%= result[1]["sum_all"] %></td>
+        <td class="text-center"><%= raw result[1]["sum_all"] %></td>
       </tr>
     <% end %>
     </tbody>

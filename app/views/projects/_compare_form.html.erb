@@ -39,7 +39,10 @@
       </div>
     </div>
   </div>
-
+  <div class="form-group">
+    <%= form.label :percent, 'Минимальный % совпадений' %>
+    <%= form.number_field :percent, class: 'form-control' %>
+  </div>
   <div class="mt-3">
     <%= form.submit 'Compare', class: "btn btn-primary" %>
   </div>
