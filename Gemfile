@@ -80,3 +80,7 @@ gem 'jquery-rails'
 gem "sassc-rails", "2.1.2"
 gem 'pagy', '~> 6.0'
 
+gem 'rtesseract'
+gem 'prawn'
+gem 'mini_magick'
+gem 'rmagick'

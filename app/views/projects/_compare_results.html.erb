@@ -11,9 +11,10 @@
     <tr>
       <th>№ стр</th>
       <th>строка для поиска</th>
+      <th>% совпадений</th>
       <th>№ стр</th>
       <th>результат поиска</th>
-      <th>% совпадений</th>
+
     </tr>
     </thead>
     <tbody>
@@ -21,9 +22,10 @@
       <tr>
         <td><%= result[1]["num_str1"] %></td>
         <td><%= raw result[1]["row1"] %></td>
+        <td class="text-center"><%= raw result[1]["sum_all"] %></td>
         <td><%= result[1]["num_str2"] %></td>
         <td><%= raw result[1]["row2"] %></td>
-        <td class="text-center"><%= raw result[1]["sum_all"] %></td>
+
       </tr>
     <% end %>
     </tbody>

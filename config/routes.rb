@@ -6,6 +6,10 @@ Rails.application.routes.draw do
     post 'compare', on: :member
   end
 
+  # get 'documents/new'
+  # get 'documents/download_pdf', to: 'documents#download_pdf', as: 'download_pdf'
+  # post 'documents/process_pdf'
+
   root "projects#index"
 
 end

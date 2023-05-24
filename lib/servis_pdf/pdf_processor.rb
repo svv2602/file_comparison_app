@@ -95,9 +95,11 @@ class PdfProcessor
       words2 = str2.split(/ /).reject(&:empty?).uniq
       words1.each do |word|
         if words2.include?(word) && !word.match(/<span.*<\/span>/)
-          marked_word = "<strong><span style='color: yellow; background-color: green;'>#{word}</span></strong>"
-          str1 = str1.gsub(/(?<=\s|^)#{Regexp.escape(word)}(?=\s|$)/, marked_word)
-          str2 = str2.gsub(/(?<=\s|^)#{Regexp.escape(word)}(?=\s|$)/, marked_word)
+          # marked_word1 = "<strong><span style='color: green; '>#{word}</span></strong>"
+          marked_word1 = "<span style='color: black; '>#{word}</span>"
+          marked_word2 = "<span style='color: blue; background-color: yellow;'>#{word}</span>"
+          str1 = str1.gsub(/(?<=\s|^)#{Regexp.escape(word)}(?=\s|$)/, marked_word1)
+          str2 = str2.gsub(/(?<=\s|^)#{Regexp.escape(word)}(?=\s|$)/, marked_word2)
         else
           marked_word = "<span style='color: red;'>#{word}</span>"
           str1 = str1.gsub(/(?<=\s|^)#{Regexp.escape(word)}(?=\s|$)/, marked_word)

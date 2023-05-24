@@ -44,10 +44,4 @@ class DocPdfOCR
 
 end
 
-file = DocController.new
-path = "lib/servis_pdf/inv3a.pdf"
-file.convert_pdf_to_img(path, 'png')
-
-file_path = "lib/servis_pdf/inv3a.jpg-1.jpg"
-file.create_pdf_with_ocr(file_path)
 
