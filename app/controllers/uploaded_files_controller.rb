@@ -7,9 +7,10 @@ require 'servis_pdf/text_processing'
 class UploadedFilesController < ApplicationController
   include TextProcessing
   before_action :set_project
-  before_action :set_file, only: [:show, :destroy,
+  before_action :set_file, only: [:show, :destroy,:create_pdf,
                                   :edit_text_content,
-                                  :update_text_content]
+                                  :update_text_content,
+                                  :upload_file_content]
 
   def index
     @uploaded_files = @project.uploaded_files
@@ -66,8 +67,7 @@ class UploadedFilesController < ApplicationController
 
     @uploaded_file.name = content_file.original_filename
     #============================
-    file_content = @uploaded_file.processed_file.download
-    @uploaded_file.text_content = extract_table_data(file_content)
+    load_file_content
     #================================
     if @uploaded_file.save
 
@@ -89,15 +89,31 @@ class UploadedFilesController < ApplicationController
 
 
 
-
-
   def destroy
     @uploaded_file.destroy
     flash[:success] = 'Файл был успешно удален из проекта.'
     redirect_to edit_project_path(@project)
   end
 
+  def create_pdf
+    create_pdf_from_text(@uploaded_file)
+    redirect_to edit_project_path(@project), notice: 'PDF успешно обновлен.'
+  end
+
+  def upload_file_content
+    load_file_content
+    @uploaded_file.save
+
+    redirect_to edit_text_content_project_file_path(@uploaded_file.project, @uploaded_file), notice: 'Оригинальный файл успешно загружен.'
+  end
+
   private
+
+  def load_file_content
+    file_content = @uploaded_file.processed_file.download
+    @uploaded_file.text_content = extract_text(file_content)
+  end
+
 
   def set_project
     @project = Project.find(params[:project_id])

@@ -6,6 +6,8 @@ Rails.application.routes.draw do
       member do
         get 'edit_text_content' # Новый маршрут для редактирования текстового содержимого
         patch 'update_text_content' # Маршрут для обновления текстового содержимого
+        post 'upload_file_content' # маршрут для загрузки оригинального файла
+        post 'create_pdf'
       end
     end
 

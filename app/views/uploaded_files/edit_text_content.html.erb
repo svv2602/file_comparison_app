@@ -1,9 +1,13 @@
 <!-- edit_text_content.html.erb -->
 
-<%= form_for [@uploaded_file.project, @uploaded_file], url: update_text_content_project_file_path(@uploaded_file.project, @uploaded_file), method: :patch do |f| %>
-  <div class="form-group">
-    <%= f.label :text_content %>
-    <%= f.text_area :text_content, class: 'form-control', rows: 5 %>
-  </div>
-  <%= f.submit 'Сохранить', class: 'btn btn-primary' %>
-<% end %>
+  <%= form_for [@uploaded_file.project, @uploaded_file], url: update_text_content_project_file_path(@uploaded_file.project, @uploaded_file), method: :patch do |f| %>
+    <div class="form-group">
+      <%= f.label "Текст для корректировки:" %>
+      <%= f.text_area :text_content, class: 'form-control h-100', rows: 30 %>
+    </div>
+    <%= f.submit 'Сохранить', class: 'btn btn-primary mt-5' %>
+  <% end %>
+
+
+<%= button_to 'Загрузить оригинал', upload_file_content_project_file_path(@uploaded_file.project, @uploaded_file), method: :post, class: 'btn btn-secondary mt-3' %>
+<%= button_to 'Обновить PDF', create_pdf_project_file_path(@uploaded_file.project, @uploaded_file), method: :post, class: 'btn btn-secondary mt-3' %>
