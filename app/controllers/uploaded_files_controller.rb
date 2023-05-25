@@ -30,15 +30,8 @@ class UploadedFilesController < ApplicationController
 
       if obj.create_pdf_with_ocr == false # Проверяем результат создания PDF с распознанным текстом
         @uploaded_file = @project.uploaded_files.build(content: content_file, processed_file: content_file)
-        # @uploaded_file = @project.uploaded_files.build(content: content_file) # Создаем экземпляр UploadedFile с исходным загруженным файлом
       else
         converted_pdf_path = obj.create_pdf_with_ocr # Получаем путь к обработанному PDF
-        # content_blob = ActiveStorage::Blob.create_and_upload!(
-        #   io: File.open(file_path),
-        #   filename: File.basename(file_path),
-        #   content_type: "application/pdf"
-        # )
-
         processed_file_blob = ActiveStorage::Blob.create_and_upload!(
           io: File.open(converted_pdf_path),
           filename: File.basename(converted_pdf_path),
@@ -46,6 +39,7 @@ class UploadedFilesController < ApplicationController
         )
         @uploaded_file = @project.uploaded_files.build(content: content_file, processed_file: processed_file_blob) # Создаем экземпляр UploadedFile с обработанным файлом
       end
+
     else
       @uploaded_file = @project.uploaded_files.build(content: content_file) # Создаем экземпляр UploadedFile с исходным загруженным файлом
     end

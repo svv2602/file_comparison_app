@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_25_031408) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_25_082830) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -55,6 +55,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_25_031408) do
     t.datetime "updated_at", null: false
     t.binary "pdf"
     t.binary "processed_file"
+    t.text "text_content"
     t.index ["project_id"], name: "index_uploaded_files_on_project_id"
   end
 

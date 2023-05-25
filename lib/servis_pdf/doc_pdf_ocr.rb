@@ -2,8 +2,11 @@ require 'rtesseract'
 require 'prawn'
 require 'pdf/reader'
 require 'fileutils'
+require_relative 'text_processing'
+
 
 class DocPdfOCR
+  include TextProcessing
   def initialize(file_path, id_user = 1)
     @file_path = file_path
     @id_user = id_user
@@ -86,13 +89,6 @@ class DocPdfOCR
     end
   end
 
-  def process_text_content(file_path)
-    image_text = RTesseract.new(file_path).to_s
-    image_text = image_text.gsub(/\n /, '').gsub(/\n+/, "\n").gsub(/_+/, " ").gsub(/US(S|s)/, "US$")
-    image_text = image_text.gsub(/\$+/, '$').gsub("|", " ")
-    image_text = image_text.gsub(/RI(?=\d|T)/, 'R1').gsub(/(?<=(R1))T/, '7').gsub(/(?<=(\d ))(i|I|1)s(?= \|)/, '18')
-    image_text
-  end
 
 
   def contains_text?

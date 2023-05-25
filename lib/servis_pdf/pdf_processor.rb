@@ -2,6 +2,7 @@ require 'pdf/reader'
 require 'stringio'
 require_relative 'arr_const'
 
+
 class PdfProcessor
   def initialize(uploaded_file, str_start, str_end)
     raise ArgumentError, "Для сравнения выбирать только файлы PDF" unless uploaded_file.content_type == "application/pdf"
@@ -325,6 +326,7 @@ class PdfProcessor
     end
     k >= 1 ? "#{key}#{k}" : key
   end
+
 
 end
 

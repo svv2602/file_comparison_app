@@ -1,5 +1,4 @@
 
-
 VALUE_MANUFACTURER = ["michelin", "bridgestone", "goodyear"]
 VALUE_SPEED = ('A'..'Y').to_a << "ZR"
 VALUE_CURRENCY = ['US\$|US|EUR', '\$', '€']
