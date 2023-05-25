@@ -54,14 +54,13 @@ class DocPdfOCR
   def create_pdf_with_ocr
     # puts convert_pdf_to_img(file_path).gsub(/jpg/,"jpg-1.jpg")
     unless contains_text?
-      file_path = convert_pdf_to_img.gsub(/jpg/,"jpg-1.jpg")
+      file_path = convert_pdf_to_img.gsub(/jpg/, "jpg-1.jpg")
       pdf_path = basename_path + 'pdf'
       image_text = RTesseract.new(file_path).to_s
       # puts image_text
-      image_text = image_text.gsub(/\n /, '').gsub(/\n+/, "\n").gsub(/_+/," ").gsub(/US(S|s)/,"US$")
-      image_text = image_text.gsub(/\$+/, '$')
-      image_text = image_text.gsub(/RI(?=\d|T)/, 'R1').gsub(/(?<=(R1))T/,'7').gsub(/(?<=(\d ))(i|I|1)s(?= \|)/,'18')
-      # puts image_text.inspect
+      image_text = image_text.gsub(/\n /, '').gsub(/\n+/, "\n").gsub(/_+/, " ").gsub(/US(S|s)/, "US$")
+      image_text = image_text.gsub(/\$+/, '$').gsub("|", " ")
+      image_text = image_text.gsub(/RI(?=\d|T)/, 'R1').gsub(/(?<=(R1))T/, '7').gsub(/(?<=(\d ))(i|I|1)s(?= \|)/, '18')
 
       Prawn::Document.generate(pdf_path) do
         text image_text
@@ -78,21 +77,20 @@ class DocPdfOCR
   def contains_text?
     contains_text = false
 
-      reader = PDF::Reader.new(@file_path)
+    reader = PDF::Reader.new(@file_path)
 
-      reader.pages.each do |page|
-        text = page.text
-        if text.match?(/\S/) # Проверяем, содержит ли текст страницы непустые символы, отличные от пробелов
-          contains_text = true
-          break
-        end
+    reader.pages.each do |page|
+      text = page.text
+      if text.match?(/\S/) # Проверяем, содержит ли текст страницы непустые символы, отличные от пробелов
+        contains_text = true
+        break
       end
+    end
 
     contains_text
   end
 
 end
-
 
 # file_path = "/home/user/Рабочий стол/новая_таможня/invoice.pdf"
 # file_path = 'lib/servis_pdf/inv3a.pdf'

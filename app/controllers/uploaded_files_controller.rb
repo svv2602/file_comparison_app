@@ -18,34 +18,16 @@ class UploadedFilesController < ApplicationController
     @uploaded_file = @project.uploaded_files.build
   end
 
-  # def create
-  #   @uploaded_file = @project.uploaded_files.build(file_params)
-  #   @uploaded_file.name = file_params[:content].original_filename
-  #
-  #
-  #   if @uploaded_file.save
-  #     if file_params[:content].content_type != "application/pdf"
-  #       flash[:danger] = "Файл без расширения PDF добавлен в проект.  Для него не будет доступно сравнение."
-  #     else
-  #       flash[:success] = 'Файл успешно добавлен в проект.'
-  #     end
-  #
-  #     redirect_to edit_project_path(@project)
-  #   else
-  #     flash.now[:info] = 'Файл не был добавлен в проект.'
-  #     render :new
-  #   end
-  # end
-
 
   def create
     file_extension = File.extname(file_params[:content].original_filename).downcase
     content_file = file_params[:content]
 
+
     if file_extension == ".pdf"
       file_path = content_file.path # Получаем путь к загруженному файлу
 
-      obj = DocPdfOCR.new(file_path) # Создаем экземпляр класса DocPdfOCR
+      obj = DocPdfOCR.new(file_path, current_user.id) # Создаем экземпляр класса DocPdfOCR
 
       if obj.create_pdf_with_ocr == false # Проверяем результат создания PDF с распознанным текстом
         @uploaded_file = @project.uploaded_files.build(content: content_file) # Создаем экземпляр UploadedFile с исходным загруженным файлом
@@ -72,7 +54,7 @@ class UploadedFilesController < ApplicationController
         flash[:success] = 'Файл успешно добавлен в проект.'
       end
 
-      DocPdfOCR.remove_files_from_dir
+      DocPdfOCR.remove_files_from_dir(current_user.id)
       redirect_to edit_project_path(@project)
     else
       flash.now[:info] = 'Файл не был добавлен в проект.'
