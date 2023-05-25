@@ -7,6 +7,7 @@
         <th scope="col">Скачать</th>
         <th scope="col">Просмотреть</th>
         <th scope="col">Распознано</th>
+        <th scope="col">Редактировать</th>
         <th scope="col">Дата загрузки</th>
         <th scope="col">Удалить</th> <!-- Новая колонка -->
       </tr>
@@ -24,6 +25,10 @@
               Файл не распознан
             <% end %>
           </td>
+          <td>
+            <%= link_to 'Редактировать', edit_text_content_project_file_path(uploaded_file.project, uploaded_file) %>
+          </td>
+
           <td><%= uploaded_file.created_at.to_s(:db) %></td>
           <td>
             <%= button_to "Удалить", project_file_path(project, uploaded_file), method: :delete,

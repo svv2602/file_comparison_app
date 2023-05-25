@@ -1,11 +1,15 @@
 
 require 'servis_pdf/doc_pdf_ocr'
+require 'servis_pdf/text_processing'
 # метка очистки
 
 
 class UploadedFilesController < ApplicationController
+  include TextProcessing
   before_action :set_project
-  before_action :set_file, only: [:show, :destroy]
+  before_action :set_file, only: [:show, :destroy,
+                                  :edit_text_content,
+                                  :update_text_content]
 
   def index
     @uploaded_files = @project.uploaded_files
@@ -16,6 +20,21 @@ class UploadedFilesController < ApplicationController
 
   def new
     @uploaded_file = @project.uploaded_files.build
+  end
+
+  def edit_text_content
+    # @uploaded_file = UploadedFile.find(params[:id])
+  end
+
+  def update_text_content
+    # @uploaded_file = UploadedFile.find(params[:id])
+    if @uploaded_file.update(text_content: params[:uploaded_file][:text_content])
+      flash[:success] = 'Текст успешно обновлен.'
+      redirect_to project_path(@uploaded_file.project)
+    else
+      flash.now[:info] = 'Ошибка при обновлении текста.'
+      render :edit_text_content
+    end
   end
 
 
@@ -37,6 +56,7 @@ class UploadedFilesController < ApplicationController
           filename: File.basename(converted_pdf_path),
           content_type: "application/pdf"
         )
+
         @uploaded_file = @project.uploaded_files.build(content: content_file, processed_file: processed_file_blob) # Создаем экземпляр UploadedFile с обработанным файлом
       end
 
@@ -45,7 +65,10 @@ class UploadedFilesController < ApplicationController
     end
 
     @uploaded_file.name = content_file.original_filename
-
+    #============================
+    file_content = @uploaded_file.processed_file.download
+    @uploaded_file.text_content = extract_table_data(file_content)
+    #================================
     if @uploaded_file.save
 
       if file_extension == ".pdf" && obj.create_pdf_with_ocr != false
@@ -54,7 +77,9 @@ class UploadedFilesController < ApplicationController
         flash[:success] = 'Файл успешно добавлен в проект.'
       end
 
+
       DocPdfOCR.remove_files_from_dir(current_user.id)
+
       redirect_to edit_project_path(@project)
     else
       flash.now[:info] = 'Файл не был добавлен в проект.'

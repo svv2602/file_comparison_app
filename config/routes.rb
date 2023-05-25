@@ -2,13 +2,15 @@
 Rails.application.routes.draw do
   devise_for :users
   resources :projects do
-    resources :uploaded_files, as: 'files'
+    resources :uploaded_files, as: 'files' do
+      member do
+        get 'edit_text_content' # Новый маршрут для редактирования текстового содержимого
+        patch 'update_text_content' # Маршрут для обновления текстового содержимого
+      end
+    end
+
     post 'compare', on: :member
   end
-
-  # get 'documents/new'
-  # get 'documents/download_pdf', to: 'documents#download_pdf', as: 'download_pdf'
-  # post 'documents/process_pdf'
 
   root "projects#index"
 

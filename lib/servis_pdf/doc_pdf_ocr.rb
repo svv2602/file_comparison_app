@@ -55,11 +55,12 @@ class DocPdfOCR
   end
 
   def create_pdf_with_ocr
-    # puts convert_pdf_to_img(file_path).gsub(/jpg/,"jpg-1.jpg")
+
     unless contains_text?
       file_path = convert_pdf_to_img.gsub(/jpg/, "jpg-1.jpg")
       pdf_path = basename_path + 'pdf'
-      image_text = process_text_content(file_path)
+      image_text = RTesseract.new(file_path).to_s
+      image_text = process_text_content(image_text)
 
       Prawn::Document.generate(pdf_path) do
         text image_text
@@ -77,7 +78,8 @@ class DocPdfOCR
     unless contains_text?
       file_path = convert_pdf_to_img.gsub(/jpg/, "jpg-1.jpg")
       txt_path = basename_path + 'txt'
-      image_text = process_text_content(file_path)
+      image_text = RTesseract.new(file_path).to_s
+      image_text = process_text_content(image_text)
       File.open(txt_path, 'w') do |file|
         file.write(image_text)
       end
