@@ -26,19 +26,25 @@ class UploadedFilesController < ApplicationController
 
     if file_extension == ".pdf"
       file_path = content_file.path # Получаем путь к загруженному файлу
-
       obj = DocPdfOCR.new(file_path, current_user.id) # Создаем экземпляр класса DocPdfOCR
 
       if obj.create_pdf_with_ocr == false # Проверяем результат создания PDF с распознанным текстом
-        @uploaded_file = @project.uploaded_files.build(content: content_file) # Создаем экземпляр UploadedFile с исходным загруженным файлом
+        @uploaded_file = @project.uploaded_files.build(content: content_file, processed_file: content_file)
+        # @uploaded_file = @project.uploaded_files.build(content: content_file) # Создаем экземпляр UploadedFile с исходным загруженным файлом
       else
         converted_pdf_path = obj.create_pdf_with_ocr # Получаем путь к обработанному PDF
-        content_blob = ActiveStorage::Blob.create_and_upload!(
+        # content_blob = ActiveStorage::Blob.create_and_upload!(
+        #   io: File.open(file_path),
+        #   filename: File.basename(file_path),
+        #   content_type: "application/pdf"
+        # )
+
+        processed_file_blob = ActiveStorage::Blob.create_and_upload!(
           io: File.open(converted_pdf_path),
           filename: File.basename(converted_pdf_path),
           content_type: "application/pdf"
         )
-        @uploaded_file = @project.uploaded_files.build(content: content_blob) # Создаем экземпляр UploadedFile с обработанным файлом
+        @uploaded_file = @project.uploaded_files.build(content: content_file, processed_file: processed_file_blob) # Создаем экземпляр UploadedFile с обработанным файлом
       end
     else
       @uploaded_file = @project.uploaded_files.build(content: content_file) # Создаем экземпляр UploadedFile с исходным загруженным файлом

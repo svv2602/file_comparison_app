@@ -4,6 +4,8 @@ require_relative 'arr_const'
 
 class PdfProcessor
   def initialize(uploaded_file, str_start, str_end)
+    raise ArgumentError, "Для сравнения выбирать только файлы PDF" unless uploaded_file.content_type == "application/pdf"
+
     @pdf_blob = uploaded_file
     @str_start = str_start.empty? ? 1 : str_start.to_i
     @str_end = str_end.empty? ? line_count_from_pdf(uploaded_file) : str_end.to_i

@@ -84,3 +84,5 @@ gem 'rtesseract'
 gem 'prawn'
 gem 'mini_magick'
 gem 'rmagick'
+
+gem 'mime-types', '~> 3.1'

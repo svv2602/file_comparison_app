@@ -56,11 +56,7 @@ class DocPdfOCR
     unless contains_text?
       file_path = convert_pdf_to_img.gsub(/jpg/, "jpg-1.jpg")
       pdf_path = basename_path + 'pdf'
-      image_text = RTesseract.new(file_path).to_s
-      # puts image_text
-      image_text = image_text.gsub(/\n /, '').gsub(/\n+/, "\n").gsub(/_+/, " ").gsub(/US(S|s)/, "US$")
-      image_text = image_text.gsub(/\$+/, '$').gsub("|", " ")
-      image_text = image_text.gsub(/RI(?=\d|T)/, 'R1').gsub(/(?<=(R1))T/, '7').gsub(/(?<=(\d ))(i|I|1)s(?= \|)/, '18')
+      image_text = process_text_content(file_path)
 
       Prawn::Document.generate(pdf_path) do
         text image_text
@@ -73,6 +69,31 @@ class DocPdfOCR
     end
 
   end
+
+  def create_txt_with_ocr
+    unless contains_text?
+      file_path = convert_pdf_to_img.gsub(/jpg/, "jpg-1.jpg")
+      txt_path = basename_path + 'txt'
+      image_text = process_text_content(file_path)
+      File.open(txt_path, 'w') do |file|
+        file.write(image_text)
+      end
+
+      # puts "Текстовый документ с распознанным текстом успешно создан: #{txt_path}"
+      txt_path
+    else
+      false
+    end
+  end
+
+  def process_text_content(file_path)
+    image_text = RTesseract.new(file_path).to_s
+    image_text = image_text.gsub(/\n /, '').gsub(/\n+/, "\n").gsub(/_+/, " ").gsub(/US(S|s)/, "US$")
+    image_text = image_text.gsub(/\$+/, '$').gsub("|", " ")
+    image_text = image_text.gsub(/RI(?=\d|T)/, 'R1').gsub(/(?<=(R1))T/, '7').gsub(/(?<=(\d ))(i|I|1)s(?= \|)/, '18')
+    image_text
+  end
+
 
   def contains_text?
     contains_text = false

@@ -69,8 +69,8 @@ class ProjectsController < ApplicationController
         start_line2 = params[:start_line2]
         end_line2 = params[:end_line2]
         percent = params[:percent].to_i
-        pdf_processor1 = PdfProcessor.new(file1.content, start_line1, end_line1)
-        pdf_processor2 = PdfProcessor.new(file2.content, start_line2, end_line2)
+        pdf_processor1 = PdfProcessor.new(file1.processed_file, start_line1, end_line1)
+        pdf_processor2 = PdfProcessor.new(file2.processed_file, start_line2, end_line2)
 
         if pdf_processor1.contains_text? && pdf_processor2.contains_text?
           @results = PdfProcessor.match_result(pdf_processor1, pdf_processor2, percent)
