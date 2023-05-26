@@ -1,13 +1,16 @@
+<turbo-frame id="flash-messages">
+  <%= turbo_stream_from 'flash-messages' %>
+</turbo-frame>
 
 <h1>Группа документов: <%= @project.name %></h1>
+<%= render 'form', project: @project %>
+
+<%#= link_to 'Edit', edit_project_path(@project), class: "btn btn-primary" %>
+<%#= link_to 'На главную', projects_path, class: "btn btn-secondary" %>
 
 
-<%= link_to 'Edit', edit_project_path(@project), class: "btn btn-primary" %>
-<%= link_to 'Back', projects_path, class: "btn btn-secondary" %>
+<%#= render 'compare_form' %>
 
-
-<%= render 'compare_form' %>
-
-<turbo-frame id="results">
-  <%= render 'projects/compare_results', results: @results %>
-</turbo-frame>
+<!--<turbo-frame id="results">-->
+  <%#= render 'projects/compare_results', results: @results %>
+<!--</turbo-frame>-->

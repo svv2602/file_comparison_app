@@ -1,3 +1,8 @@
+<turbo-frame id="flash-messages">
+  <%= turbo_stream_from 'flash-messages' %>
+</turbo-frame>
+
+<h3><%= @project.name %></h3>
 <%= form_with(url: compare_project_path(@project), method: :post, local: true) do |form| %>
   <div class="row align-items-center">
     <div class="col">
@@ -47,9 +52,17 @@
     </div>
   </div>
 
-
-  <div class="mt-3">
-    <%= form.submit 'Сравнить >>', class: "btn btn-primary" %>
+  <div class="actions">
+      <%= link_to "< Вернуться ", @project,  class: "btn btn-primary mt-3" %>
+      <%= form.submit 'Сравнить >>', class: "btn btn-primary mt-3" %>
   </div>
+
+
 <% end %>
 
+
+<turbo-frame id="results">
+  <% if @results.present? %>
+    <%= render 'projects/compare_results', results: @results %>
+  <% end %>
+</turbo-frame>

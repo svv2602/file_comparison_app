@@ -2,12 +2,57 @@
   <%= turbo_stream_from 'flash-messages' %>
 </turbo-frame>
 
-<h1>Группа документов: <%= @project.name %></h1>
-<%= render 'file_table', project: @project %>
+<%= form_with(model: @project, local: true) do |form| %>
+  <% if @project.errors.any? %>
+    <div id="error_explanation" class="alert alert-danger">
+      <h2><%= pluralize(project.errors.count, "error") %> prohibited this project from being saved:</h2>
 
-<%= link_to 'Add Files', new_project_file_path(@project), class: "btn btn-primary", target: "new_file" %>
+      <ul>
+        <% project.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="mb-3">
+    <% if @project.new_record? %>
+      <strong>Дата создания: </strong> <%= format_datetime(Time.current.localtime) %>
+    <% else %>
+      <strong>Последнее обновление: </strong> <%= format_datetime(@project.updated_at) %>
+    <% end %>
+  </div>
 
-<%= render 'form', project: @project %>
+  <div class="mb-3 row">
+    <div class="col-auto text-center">
+      <h3>
+        <%= form.label :name, "Наименование", class: "form-label" %>
+      </h3>
+    </div>
+    <div class="col">
+      <%= form.text_field :name, class: "form-control" %>
+    </div>
+  </div>
+
+
+  <div class="mb-3 mt-3 form-inline">
+    <%= form.label :comment, "Комментарий", class: "form-label" %>
+    <%= form.text_area :comment, class: "form-control" %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit "Save", class: "btn btn-primary mt-3", url: root_path %>
+    <% if !@project.new_record? %>
+      <%= link_to "Отмена", project_path(@project), class: "btn btn-secondary mt-3" %>
+    <% end %>
+
+  </div>
+<% end %>
+
+
+
+
+
+
 
 
 

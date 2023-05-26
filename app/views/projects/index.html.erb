@@ -1,34 +1,27 @@
-<h1>Projects</h1>
+<h1>Документы</h1>
 
-<%= link_to 'New Project', new_project_path, class: "btn btn-primary" %>
+<%= link_to 'Новая группа документов', new_project_path, class: "btn btn-primary mt-3 mb-3" %>
 
 <%= render "shared/show_pagination" %>
 
 <table class="table">
   <thead>
   <tr>
-    <th scope="col">Project Name</th>
-    <th scope="col">Actions</th>
-    <th scope="col"></th>
+    <th scope="col">Группа документов</th>
     <th scope="col"></th>
   </tr>
   </thead>
   <tbody>
-  <% @projects.each do |project| %>
-    <tr>
-      <!--      <td><%#= link_to project.name, project %></td>-->
-      <td><%=  project.name %></td>
-      <td>
-        <%= link_to 'Show', project_path(project), class: 'btn btn-info' %>
-      </td>
-      <td>
-        <%= link_to 'Edit', edit_project_path(project), class: 'btn btn-warning' %>
-      </td>
-      <td>
-        <%= button_to 'Delete', project_path(project), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
-      </td>
-    </tr>
-  <% end %>
+    <% @projects.each do |project| %>
+      <tr>
+        <td><%= link_to project.name, project %></td>
+        <td>
+            <%= button_to 'Удалить', project_path(project), method: :delete,
+                          data: { turbo_confirm: 'Are you sure?' },
+                          class: 'btn btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
   </tbody>
 </table>
 

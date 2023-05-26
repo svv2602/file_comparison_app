@@ -10,7 +10,7 @@ Rails.application.routes.draw do
         post 'create_pdf'
       end
     end
-
+    get 'compare_form', on: :member
     post 'compare', on: :member
   end
 

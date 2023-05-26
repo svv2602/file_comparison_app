@@ -2,7 +2,7 @@ require 'servis_pdf/pdf_processor'
 
 class ProjectsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_project, only: [:show, :edit, :update, :destroy, :compare, :destroy_file]
+  before_action :set_project, only: [:show, :edit, :update, :destroy, :compare, :destroy_file, :compare_form]
 
   # GET /projects
   def index
@@ -25,12 +25,17 @@ class ProjectsController < ApplicationController
   def edit
   end
 
+  def compare_form
+    @uploaded_files = @project.uploaded_files # Добавьте эту строку
+    # Логика для отображения формы compare_form
+  end
+
   # POST /projects
   def create
     @project = current_user.projects.build(project_params)
 
     if @project.save
-      flash[:success] = 'Проект успешно обновлен.'
+      flash.now[:success] = 'Проект успешно обновлен.'
       redirect_to @project
     else
       flash.now[:warning] = 'Ошибка при создании проекта.'
@@ -41,7 +46,7 @@ class ProjectsController < ApplicationController
   # PATCH/PUT /projects/1
   def update
     if @project.update(project_params)
-      flash[:success] = 'Проект успешно обновлен.'
+      flash.now[:success] = 'Проект успешно обновлен.'
       redirect_to @project
     else
       flash.now[:warning] = 'Ошибка при обновлении проекта.'
@@ -51,6 +56,7 @@ class ProjectsController < ApplicationController
 
   # DELETE /projects/1
   def destroy
+    @project.uploaded_files.destroy_all # Удаление связанных файлов
     @project.destroy
     redirect_to projects_url, notice: 'Проект успешно удален.'
   end
@@ -79,18 +85,21 @@ class ProjectsController < ApplicationController
             format.turbo_stream { render turbo_stream: turbo_stream.append("results", partial: "projects/compare_results", locals: { results: @results }) }
           end
         else
-          flash[:danger] = find_error_files(pdf_processor1, pdf_processor2)
-          redirect_to @project
+          flash.now[:danger] = find_error_files(pdf_processor1, pdf_processor2)
+          render :compare_form
+          # redirect_to @project
         end
       else
-        flash[:warning] = "Пожалуйста, выберите файлы для сравнения"
-        redirect_to @project
+        flash.now[:warning] = "Пожалуйста, выберите файлы для сравнения"
+        render :compare_form
+        # redirect_to @project
       end
 
     rescue ArgumentError => e
       flash.clear
-      flash[:danger] = e.message
-      redirect_to @project
+      flash.now[:danger] = e.message
+      render :compare_form
+      # redirect_to @project
       return
     end
 

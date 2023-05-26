@@ -68,7 +68,7 @@ class UploadedFilesController < ApplicationController
 
     @uploaded_file.name = content_file.original_filename
     #============================
-    load_file_content
+    # load_file_content if file_extension == ".pdf"
     #================================
     if @uploaded_file.save
 
@@ -81,7 +81,7 @@ class UploadedFilesController < ApplicationController
 
       DocPdfOCR.remove_files_from_dir(current_user.id)
 
-      redirect_to edit_project_path(@project)
+      redirect_to project_path(@project)
     else
       flash.now[:info] = 'Файл не был добавлен в проект.'
       render :new
@@ -93,12 +93,12 @@ class UploadedFilesController < ApplicationController
   def destroy
     @uploaded_file.destroy
     flash[:success] = 'Файл был успешно удален из проекта.'
-    redirect_to edit_project_path(@project)
+    redirect_to project_path(@project)
   end
 
   def create_pdf
     create_pdf_from_text(@uploaded_file)
-    redirect_to edit_project_path(@project), notice: 'PDF успешно обновлен.'
+    redirect_to project_path(@project), notice: 'PDF успешно обновлен.'
   end
 
   def upload_file_content
