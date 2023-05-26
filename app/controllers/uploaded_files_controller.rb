@@ -10,6 +10,7 @@ class UploadedFilesController < ApplicationController
   before_action :set_file, only: [:show, :destroy,:create_pdf,
                                   :edit_text_content,
                                   :update_text_content,
+                                  :load_file_content,
                                   :upload_file_content]
 
   def index
@@ -101,7 +102,8 @@ class UploadedFilesController < ApplicationController
   end
 
   def upload_file_content
-    load_file_content
+    file_content = @uploaded_file.processed_file.download
+    @uploaded_file.text_content = extract_text(file_content)
     @uploaded_file.save
 
     redirect_to edit_text_content_project_file_path(@uploaded_file.project, @uploaded_file), notice: 'Оригинальный файл успешно загружен.'

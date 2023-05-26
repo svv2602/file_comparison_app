@@ -4,9 +4,14 @@ require 'pdf/reader'
 require 'prawn'
 module TextProcessing
   def process_text_content(image_text)
-    image_text = image_text.gsub(/\n /, '').gsub(/\n+/, "\n").gsub(/_+/, " ").gsub(/US(S|s)/, "US$")
-    image_text = image_text.gsub(/\$+/, '$').gsub("|", " ")
-    image_text = image_text.gsub(/RI(?=\d|T)/, 'R1').gsub(/(?<=(R1))T/, '7').gsub(/(?<=(\d ))(i|I|1)s(?= \|)/, '18')
+    image_text = image_text.gsub(/\n /, '').gsub(/\n+/, "\n").gsub(/_+/, " ")
+    image_text = image_text.gsub(/(?<=(\d ))(i|I|1)(s|g)(?= \|)/, '18')
+    image_text = image_text.gsub(/RI(?=\d|T)/, 'R1').gsub(/(?<=(R1))T/, '7')
+    image_text = image_text.gsub(/U(S|s){2}/, "US$")
+    image_text = image_text.gsub(/(U|u)(S|s)\$/, "US$")
+    image_text.gsub(/(?<=US\$)(i|I)/, '1')
+    image_text.gsub(/(?<=US\$)(s|S|g)/, '8').gsub("|", " ")
+    image_text.gsub(/(?<=\d{3}\/)T(?=.*(\d|O))/,"7")
     image_text
   end
   def extract_text(file_content)

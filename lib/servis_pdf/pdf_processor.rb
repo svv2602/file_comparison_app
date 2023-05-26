@@ -94,9 +94,9 @@ class PdfProcessor
     end
 
     def mark_common_words_with_html(str1, str2)
-      words1 = str1.split(/ /).reject(&:empty?).uniq
-      words1.delete("|")
-      words2 = str2.split(/ /).reject(&:empty?).uniq
+      words1 = format_str_to_arr(str1)
+      words2 = format_str_to_arr(str2)
+
       words1.each do |word|
         if words2.include?(word) && !word.match(/<span.*<\/span>/)
           # marked_word1 = "<strong><span style='color: green; '>#{word}</span></strong>"
@@ -131,8 +131,8 @@ class PdfProcessor
     end
 
     def compare_strings_char(str1, str2)
-      words1 = str1.split(/ /).reject(&:empty?).uniq
-      words2 = str2.split(/ /).reject(&:empty?).uniq
+      words1 = format_str_to_arr(str1)
+      words2 = format_str_to_arr(str2)
 
       word_counts1 = count_word_occurrences(words1) # Подсчет использований слов в строке 1
       word_counts2 = count_word_occurrences(words2) # Подсчет использований слов в строке 2
@@ -191,11 +191,18 @@ class PdfProcessor
       result
     end
 
+    def format_str_to_arr(str)
+      arr = str.split(/ /).reject(&:empty?).uniq
+      # arr.each do |word|
+      #   word.gsub!(/#{VALUE_CURRENCY.join("|")}/, "") if word =~ /^#{REG_VALUE_COST_WITH_CURRENCY}$/
+      # end
+      arr.delete("|")
+      arr.uniq
+    end
+
     def compare_strings(str1, str2)
-      # words1 = str1.split(/\W+/) # Разделение строки 1 на слова
-      # words2 = str2.split(/\W+/) # Разделение строки 2 на слова
-      words1 = str1.split(/ /).reject(&:empty?).uniq
-      words2 = str2.split(/ /).reject(&:empty?).uniq
+      words1 = format_str_to_arr(str1)
+      words2 = format_str_to_arr(str2)
 
       word_counts1 = count_word_occurrences(words1) # Подсчет использований слов в строке 1
       word_counts2 = count_word_occurrences(words2) # Подсчет использований слов в строке 2
