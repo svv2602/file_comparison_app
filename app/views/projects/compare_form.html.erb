@@ -55,14 +55,16 @@
   <div class="actions">
       <%= link_to "< Вернуться ", @project,  class: "btn btn-primary mt-3" %>
       <%= form.submit 'Сравнить >>', class: "btn btn-primary mt-3" %>
+
   </div>
 
 
 <% end %>
 
 
-<turbo-frame id="results">
-  <% if @results.present? %>
+
+  <%# if @results.present? %>
+  <turbo-frame id="results">
     <%= render 'projects/compare_results', results: @results %>
-  <% end %>
-</turbo-frame>
+  </turbo-frame>
+  <%# end %>

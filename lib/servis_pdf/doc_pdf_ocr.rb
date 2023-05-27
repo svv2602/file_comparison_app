@@ -17,9 +17,9 @@ class DocPdfOCR
     if File.directory?(folder_path)
       # Удаляем все файлы в папке
       FileUtils.rm_rf(Dir.glob("#{folder_path}/*"))
-      puts "Все файлы были удалены из папки #{folder_path}"
+      # puts "Все файлы были удалены из папки #{folder_path}"
     else
-      puts "Указанная папка #{folder_path} не существует"
+      # puts "Указанная папка #{folder_path} не существует"
     end
   end
 
@@ -41,15 +41,15 @@ class DocPdfOCR
         # result = `pdftoppm -#{hash[extension]} #{file_path} #{img_path} 2>&1`
         result = system("pdftoppm -#{hash[extension]} #{@file_path} #{img_path} 2>&1")
         if $?.success?
-          puts "PDF успешно преобразован в изображение"
+          # puts "PDF успешно преобразован в изображение"
         else
-          puts "Ошибка при преобразовании PDF в изображение: #{result}"
+          # puts "Ошибка при преобразовании PDF в изображение: #{result}"
         end
       else
-        puts "Неизвестное расширение для выходного файла"
+        # puts "Неизвестное расширение для выходного файла"
       end
     else
-      puts "Неизвестный формат входного файла"
+      # puts "Неизвестный формат входного файла"
     end
     return img_path
   end
@@ -111,12 +111,7 @@ class DocPdfOCR
 
 end
 
-# file_path = "/home/user/Рабочий стол/новая_таможня/invoice.pdf"
-# file_path = 'lib/servis_pdf/inv3a.pdf'
-# file_path = 'lib/servis_pdf/invoice.pdf'
-# doc_pdf_ocr = DocPdfOCR.new(file_path)
-# puts doc_pdf_ocr.contains_text?
-# puts doc_pdf_ocr.create_pdf_with_ocr
+
 
 
 

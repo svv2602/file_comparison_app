@@ -5,4 +5,10 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :projects
+  enum role: { admin: 'admin', regular: 'regular' }
+
+  def admin?
+    role == 'admin'
+  end
+
 end

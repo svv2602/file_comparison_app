@@ -5,9 +5,26 @@
       <%= f.label "Текст для корректировки:" %>
       <%= f.text_area :text_content, class: 'form-control h-100', rows: 30 %>
     </div>
-    <%= f.submit 'Сохранить', class: 'btn btn-primary mt-5' %>
+
+    <div class="row ">
+      <div class="col-auto">
+        <%= f.submit 'Сохранить TXT', class: 'btn btn-primary mt-3' %>
+      </div>
+      <div class="col mt-4">
+        <p>Внимание!!! Чтобы обновить OCR текст нужно сохранить</p>
+      </div>
+    </div>
+
   <% end %>
 
-
-<%= button_to 'Загрузить оригинал', upload_file_content_project_file_path(@uploaded_file.project, @uploaded_file), method: :post, class: 'btn btn-secondary mt-3' %>
-<%= button_to 'Обновить PDF', create_pdf_project_file_path(@uploaded_file.project, @uploaded_file), method: :post, class: 'btn btn-secondary mt-3' %>
+  <div class="row ">
+    <div class="col-auto">
+      <%= link_to '< Назад', project_path(@project), class: "btn btn-primary mt-3", target: "new_file" %>
+    </div>
+    <div class="col-auto">
+      <%= button_to 'Загрузить OCR', upload_file_content_project_file_path(@uploaded_file.project, @uploaded_file), method: :post, class: 'btn btn-warning mt-3' %>
+    </div>
+    <div class="col-auto">
+      <%= button_to 'Обновить OCR', create_pdf_project_file_path(@uploaded_file.project, @uploaded_file), method: :post, class: 'btn btn-warning mt-3' %>
+    </div>
+  </div>

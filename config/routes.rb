@@ -1,6 +1,9 @@
 # config/routes.rb
 Rails.application.routes.draw do
   devise_for :users
+  resources :users do
+    patch 'update_role', on: :member
+  end
   resources :projects do
     resources :uploaded_files, as: 'files' do
       member do

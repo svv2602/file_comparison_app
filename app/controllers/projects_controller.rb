@@ -35,7 +35,7 @@ class ProjectsController < ApplicationController
     @project = current_user.projects.build(project_params)
 
     if @project.save
-      flash.now[:success] = 'Проект успешно обновлен.'
+      flash[:success] = 'Проект успешно обновлен.'
       redirect_to @project
     else
       flash.now[:warning] = 'Ошибка при создании проекта.'
@@ -46,7 +46,7 @@ class ProjectsController < ApplicationController
   # PATCH/PUT /projects/1
   def update
     if @project.update(project_params)
-      flash.now[:success] = 'Проект успешно обновлен.'
+      flash[:success] = 'Проект успешно обновлен.'
       redirect_to @project
     else
       flash.now[:warning] = 'Ошибка при обновлении проекта.'
@@ -85,19 +85,19 @@ class ProjectsController < ApplicationController
             format.turbo_stream { render turbo_stream: turbo_stream.append("results", partial: "projects/compare_results", locals: { results: @results }) }
           end
         else
-          flash.now[:danger] = find_error_files(pdf_processor1, pdf_processor2)
+          flash[:danger] = find_error_files(pdf_processor1, pdf_processor2)
           render :compare_form
           # redirect_to @project
         end
       else
-        flash.now[:warning] = "Пожалуйста, выберите файлы для сравнения"
+        flash[:warning] = "Пожалуйста, выберите файлы для сравнения"
         render :compare_form
         # redirect_to @project
       end
 
     rescue ArgumentError => e
       flash.clear
-      flash.now[:danger] = e.message
+      flash[:danger] = e.message
       render :compare_form
       # redirect_to @project
       return

@@ -29,9 +29,8 @@ class UploadedFilesController < ApplicationController
   end
 
   def update_text_content
-    # @uploaded_file = UploadedFile.find(params[:id])
     if @uploaded_file.update(text_content: params[:uploaded_file][:text_content])
-      flash[:success] = 'Текст успешно обновлен.'
+      flash.now[:success] = 'Текст успешно обновлен.'
       redirect_to project_path(@uploaded_file.project)
     else
       flash.now[:info] = 'Ошибка при обновлении текста.'
@@ -73,9 +72,9 @@ class UploadedFilesController < ApplicationController
     if @uploaded_file.save
 
       if file_extension == ".pdf" && obj.create_pdf_with_ocr != false
-        flash[:success] = 'Файл успешно добавлен в проект. Загружен файл с распознанным текстом.'
+        flash.now[:success] = 'Файл успешно добавлен в проект. Загружен файл с распознанным текстом.'
       else
-        flash[:success] = 'Файл успешно добавлен в проект.'
+        flash.now[:success] = 'Файл успешно добавлен в проект.'
       end
 
 
@@ -97,6 +96,7 @@ class UploadedFilesController < ApplicationController
   end
 
   def create_pdf
+    # @uploaded_file.update(text_content: params[:uploaded_file][:text_content])
     create_pdf_from_text(@uploaded_file)
     redirect_to project_path(@project), notice: 'PDF успешно обновлен.'
   end

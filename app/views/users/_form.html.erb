@@ -1,0 +1,41 @@
+<%= form_with(model: @user, url: @user.persisted? ? user_path(@user) : users_path, local: true) do |form| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, 'ошибка') %> заполнения формы:</h2>
+      <ul>
+        <% @user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <table>
+    <tr>
+      <th>Метка</th>
+      <th>Поле формы</th>
+    </tr>
+    <tr>
+      <td><%= form.label :email %></td>
+      <td><%= form.email_field :email %></td>
+    </tr>
+    <tr>
+      <td><%= form.label :password %></td>
+      <td><%= form.password_field :password %></td>
+    </tr>
+    <tr>
+      <td><%= form.label :password_confirmation %></td>
+      <td><%= form.password_field :password_confirmation %></td>
+    </tr>
+    <% if current_user.admin? %>
+      <tr>
+        <td><%= form.label :role %></td>
+        <td><%= form.select :role, User.roles.keys %></td>
+      </tr>
+    <% end %>
+  </table>
+
+  <div class="actions">
+    <%= form.submit 'Сохранить' %>
+  </div>
+<% end %>

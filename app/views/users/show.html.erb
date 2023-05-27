@@ -1,0 +1,11 @@
+<h1>Информация о пользователе</h1>
+
+<p>Email: <%= @user.email %></p>
+<p>Роль: <%= @user.role %></p>
+
+<% if current_user.admin? %>
+  <%= link_to 'Редактировать', edit_user_path(@user) %>
+  <%= link_to 'Удалить', @user, method: :delete, data: { confirm: 'Вы уверены?' } %>
+<% end %>
+
+<%= link_to 'Вернуться к списку пользователей', users_path %>
