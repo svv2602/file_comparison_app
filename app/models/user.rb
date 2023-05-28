@@ -10,5 +10,8 @@ class User < ApplicationRecord
   def admin?
     role == 'admin'
   end
+  def can_edit_users?
+    admin? # Метод, определяющий, может ли пользователь с ролью "admin" редактировать других пользователей
+  end
 
 end

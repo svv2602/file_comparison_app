@@ -1,41 +1,29 @@
-<%= form_with(model: @user, url: @user.persisted? ? user_path(@user) : users_path, local: true) do |form| %>
-  <% if @user.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@user.errors.count, 'ошибка') %> заполнения формы:</h2>
-      <ul>
-        <% @user.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+<%= form_with(model: @user) do |form| %>
+  <table class="table mt-3">
+    <% if current_user.can_edit_users? %>
+      <!-- Поля для администратора -->
+      <tr>
+        <td><%= form.label :email %></td>
+        <td><%= form.email_field :email, class: 'form-control' %></td>
+      </tr>
+      <tr>
+        <td><%= form.label :role %></td>
+        <td><%= form.select :role, User.roles.keys, class: 'form-control' %></td>
+      </tr>
+    <% end %>
 
-  <table>
-    <tr>
-      <th>Метка</th>
-      <th>Поле формы</th>
-    </tr>
-    <tr>
-      <td><%= form.label :email %></td>
-      <td><%= form.email_field :email %></td>
-    </tr>
+    <!-- Поля для всех пользователей -->
     <tr>
       <td><%= form.label :password %></td>
-      <td><%= form.password_field :password %></td>
+      <td><%= form.password_field :password, class: 'form-control' %></td>
     </tr>
     <tr>
       <td><%= form.label :password_confirmation %></td>
-      <td><%= form.password_field :password_confirmation %></td>
+      <td><%= form.password_field :password_confirmation, class: 'form-control' %></td>
     </tr>
-    <% if current_user.admin? %>
-      <tr>
-        <td><%= form.label :role %></td>
-        <td><%= form.select :role, User.roles.keys %></td>
-      </tr>
-    <% end %>
   </table>
 
-  <div class="actions">
-    <%= form.submit 'Сохранить' %>
+  <div class="actions mt-3">
+    <%= form.submit 'Сохранить', class: 'btn btn-primary' %>
   </div>
 <% end %>

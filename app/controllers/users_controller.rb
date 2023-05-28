@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  before_action :authorize_admin, only: [:index, :destroy]
+  before_action :authorize_admin, only: [:index, :destroy, :edit, :update]
+
 
   def index
     @users = User.all
@@ -10,12 +11,16 @@ class UsersController < ApplicationController
   def show
   end
 
-  def new
-    @user = User.new
-  end
+
 
   def edit
+    if current_user.can_edit_users? || current_user == @user
+      render :edit
+    else
+      redirect_to root_path, alert: "У вас нет разрешения на выполнение этого действия."
+    end
   end
+
 
   def update
     if @user.update(user_params)
@@ -33,7 +38,12 @@ class UsersController < ApplicationController
   def update_role
     if current_user.admin? # Проверяем, является ли текущий пользователь администратором
       user = User.find(params[:id])
-      user.update(role: 'admin')
+      if !user.admin?
+        user.update(role: 'admin')
+      else
+        user.update(role: 'regular')
+      end
+
       redirect_to user
     else
       redirect_to root_path, alert: "У вас нет разрешения на выполнение этого действия."

@@ -1,6 +1,9 @@
-<h1>Редактирование пользователя</h1>
+<h1 class="mt-3">Редактирование пользователя</h1>
 
 <%= render 'form' %>
 
-<%= link_to 'Просмотр', @user %>
-<%= link_to 'Вернуться к списку пользователей', users_path %>
+<div class="mt-3">
+  <%#= link_to 'Просмотр', @user, class: 'btn btn-primary' %>
+
+  <%= link_to 'Вернуться к списку пользователей', users_path, class: 'btn btn-secondary' %>
+</div>
