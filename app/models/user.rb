@@ -10,8 +10,16 @@ class User < ApplicationRecord
   def admin?
     role == 'admin'
   end
+
   def can_edit_users?
-    admin? # Метод, определяющий, может ли пользователь с ролью "admin" редактировать других пользователей
+    admin?
   end
 
+  before_create :set_default_role
+
+  private
+
+  def set_default_role
+    self.role ||= :regular
+  end
 end
