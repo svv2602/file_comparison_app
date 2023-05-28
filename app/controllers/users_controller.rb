@@ -17,22 +17,28 @@ class UsersController < ApplicationController
     if current_user.can_edit_users? || current_user == @user
       render :edit
     else
-      redirect_to root_path, alert: "У вас нет разрешения на выполнение этого действия."
+      flash[:danger] = "У вас нет разрешения на выполнение этого действия."
+      redirect_to root_path
     end
   end
 
 
   def update
     if @user.update(user_params)
-      redirect_to @user, notice: 'Профиль пользователя успешно обновлен.'
+      flash[:success] = 'Профиль пользователя успешно обновлен.'
+      redirect_to @user
     else
       render :edit
     end
   end
 
   def destroy
+    @user = User.find(params[:id])
+    @user.projects.destroy_all # Удаление связанных проектов пользователя
+
     @user.destroy
-    redirect_to users_url, notice: 'Пользователь успешно удален.'
+    flash[:warning] = 'Пользователь успешно удален.'
+    redirect_to users_url
   end
 
   def update_role
@@ -46,7 +52,8 @@ class UsersController < ApplicationController
 
       redirect_to user
     else
-      redirect_to root_path, alert: "У вас нет разрешения на выполнение этого действия."
+      flash[:danger] = "У вас нет разрешения на выполнение этого действия."
+      redirect_to root_path
     end
   end
 
@@ -61,6 +68,8 @@ class UsersController < ApplicationController
   end
 
   def authorize_admin
-    redirect_to root_path, alert: 'У вас нет разрешения на выполнение этого действия.' unless current_user.admin?
+    flash[:danger] = "У вас нет разрешения на выполнение этого действия."
+    redirect_to root_path unless current_user.admin?
+    # redirect_to root_path, alert: 'У вас нет разрешения на выполнение этого действия.' unless current_user.admin?
   end
 end

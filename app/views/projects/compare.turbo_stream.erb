@@ -2,7 +2,7 @@
   <%= turbo_stream.append(:results) do %>
     <%= render 'projects/compare_results', results: @results %>
   <% end %>
-  <%= turbo_stream.replace 'flash-messages' do %>
-    <%= render 'shared/flash_messages' %>
-  <% end %>
+  <%#= turbo_stream.replace 'flash-messages' do %>
+    <%#= render 'shared/flash_messages' %>
+  <%# end %>
 <% end %>

@@ -1,13 +1,11 @@
-
 require 'servis_pdf/doc_pdf_ocr'
 require 'servis_pdf/text_processing'
 # метка очистки
 
-
 class UploadedFilesController < ApplicationController
   include TextProcessing
   before_action :set_project
-  before_action :set_file, only: [:show, :destroy,:create_pdf,
+  before_action :set_file, only: [:show, :destroy, :create_pdf,
                                   :edit_text_content,
                                   :update_text_content,
                                   :load_file_content,
@@ -38,11 +36,9 @@ class UploadedFilesController < ApplicationController
     end
   end
 
-
   def create
     file_extension = File.extname(file_params[:content].original_filename).downcase
     content_file = file_params[:content]
-
 
     if file_extension == ".pdf"
       file_path = content_file.path # Получаем путь к загруженному файлу
@@ -72,11 +68,10 @@ class UploadedFilesController < ApplicationController
     if @uploaded_file.save
 
       if file_extension == ".pdf" && obj.create_pdf_with_ocr != false
-        flash.now[:success] = 'Файл успешно добавлен в проект. Загружен файл с распознанным текстом.'
+        flash[:success] = 'Файл успешно добавлен в проект. Загружен файл с распознанным текстом.'
       else
-        flash.now[:success] = 'Файл успешно добавлен в проект.'
+        flash[:success] = 'Файл успешно добавлен в проект.'
       end
-
 
       DocPdfOCR.remove_files_from_dir(current_user.id)
 
@@ -87,8 +82,6 @@ class UploadedFilesController < ApplicationController
     end
   end
 
-
-
   def destroy
     @uploaded_file.destroy
     flash[:success] = 'Файл был успешно удален из проекта.'
@@ -98,24 +91,26 @@ class UploadedFilesController < ApplicationController
   def create_pdf
     # @uploaded_file.update(text_content: params[:uploaded_file][:text_content])
     create_pdf_from_text(@uploaded_file)
-    redirect_to project_path(@project), notice: 'PDF успешно обновлен.'
+    flash[:success] = 'PDF успешно обновлен.'
+    redirect_to project_path(@project)
   end
 
   def upload_file_content
     file_content = @uploaded_file.processed_file.download
-    @uploaded_file.text_content = extract_text(file_content)
-    @uploaded_file.save
-
-    redirect_to edit_text_content_project_file_path(@uploaded_file.project, @uploaded_file), notice: 'Оригинальный файл успешно загружен.'
+    if file_content.present?
+      @uploaded_file.text_content = extract_text(file_content)
+      @uploaded_file.save
+      flash[:success] = 'Оригинальный файл успешно загружен.'
+      redirect_to edit_text_content_project_file_path(@uploaded_file.project, @uploaded_file)
+    end
   end
 
   private
 
   def load_file_content
     file_content = @uploaded_file.processed_file.download
-    @uploaded_file.text_content = extract_text(file_content)
+    @uploaded_file.text_content = extract_text(file_content) if file_content.present?
   end
-
 
   def set_project
     @project = Project.find(params[:project_id])

@@ -1,5 +1,5 @@
 class Project < ApplicationRecord
   belongs_to :user
-  has_many :uploaded_files
-  # has_many_attached :files
+  has_many :uploaded_files, dependent: :destroy
+
 end

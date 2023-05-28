@@ -1,6 +1,4 @@
-<turbo-frame id="flash-messages">
-  <%= turbo_stream_from 'flash-messages' %>
-</turbo-frame>
+
 
 <%= form_with(model: @project, local: true) do |form| %>
   <% if @project.errors.any? %>

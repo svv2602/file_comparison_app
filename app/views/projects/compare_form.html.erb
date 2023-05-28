@@ -1,9 +1,9 @@
-<turbo-frame id="flash-messages">
-  <%= turbo_stream_from 'flash-messages' %>
-</turbo-frame>
+<!--app/views/projects/compare_form.html.erb-->
+<%= render 'shared/flash_messages' %>
 
 <h3><%= @project.name %></h3>
 <%= form_with(url: compare_project_path(@project), method: :post, local: true) do |form| %>
+
   <div class="row align-items-center">
     <div class="col">
       <div class="form-group">

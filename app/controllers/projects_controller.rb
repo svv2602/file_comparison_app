@@ -58,7 +58,8 @@ class ProjectsController < ApplicationController
   def destroy
     @project.uploaded_files.destroy_all # Удаление связанных файлов
     @project.destroy
-    redirect_to projects_url, notice: 'Проект успешно удален.'
+    flash[:success] = 'Проект успешно удален.'
+    redirect_to projects_url
   end
 
   def compare
@@ -85,19 +86,19 @@ class ProjectsController < ApplicationController
             format.turbo_stream { render turbo_stream: turbo_stream.append("results", partial: "projects/compare_results", locals: { results: @results }) }
           end
         else
-          flash[:danger] = find_error_files(pdf_processor1, pdf_processor2)
+          flash.now[:danger] = find_error_files(pdf_processor1, pdf_processor2)
           render :compare_form
           # redirect_to @project
         end
       else
-        flash[:warning] = "Пожалуйста, выберите файлы для сравнения"
+        flash.now[:warning] = "Пожалуйста, выберите файлы для сравнения"
         render :compare_form
         # redirect_to @project
       end
 
     rescue ArgumentError => e
       flash.clear
-      flash[:danger] = e.message
+      flash.now[:danger] = e.message
       render :compare_form
       # redirect_to @project
       return

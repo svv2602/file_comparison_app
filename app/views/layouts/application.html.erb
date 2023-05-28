@@ -13,7 +13,11 @@
   <body>
   <%= render 'layouts/header' %>
   <div class="container container-fluid mt-5 page-content">
-    <%= render 'shared/flash_messages' %>
+    <div id="flash-messages">
+      <%= render 'shared/flash_messages' %>
+    </div>
+
+
     <%= yield %>
   </div>
   <div class="mt-5">

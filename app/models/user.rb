@@ -4,7 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  has_many :projects
+  has_many :projects, dependent: :destroy
   enum role: { admin: 'admin', regular: 'regular' }
 
   def admin?

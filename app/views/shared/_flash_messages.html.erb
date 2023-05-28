@@ -1,8 +1,9 @@
-<%= turbo_stream.append 'flash-messages' do %>
+<!--app/views/shared/_flash_messages.html.erb-->
+<%#= turbo_stream.append 'flash-messages' do %>
   <% flash.each do |message_type, message| %>
     <div class="alert alert-<%= message_type %>">
       <%= message %>
     </div>
   <% end %>
-<% end %>
+<%# end %>
 
