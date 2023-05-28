@@ -9,7 +9,13 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
 
+
         <% if user_signed_in? %>
+          <% if current_user.can_edit_users? %>
+            <li class="nav-item">
+              <%= link_to "Пользователи", users_path, class: "nav-link" %>
+            </li>
+          <% end %>
           <li class="nav-item navbar-text">
             <%= current_user.email %>
           </li>
