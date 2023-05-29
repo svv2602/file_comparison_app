@@ -8,6 +8,12 @@ class ProjectsController < ApplicationController
   # GET /projects
   def index
     @projects = current_user.projects
+
+    if params[:search].present?
+      search_query = params[:search].downcase
+      @projects = @projects.where("LOWER(name) LIKE ? OR LOWER(comment) LIKE ?", "%#{search_query}%", "%#{search_query}%")
+    end
+
     @pagy, @projects = pagy(@projects)
     @show_pagination = @projects.count > @pagy.items
   end

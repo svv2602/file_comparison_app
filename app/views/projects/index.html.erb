@@ -2,9 +2,25 @@
   <div class="col  mt-3">
     <h2>Документы</h2>
   </div>
-  <div class="col">
-    <%= link_to 'Новая группа документов', new_project_path, class: "btn btn-primary mt-3 mb-3" %>
+  <div class="mb-3 row justify-content-between">
+    <div class="col">
+      <%= link_to 'Новая группа документов', new_project_path, class: "btn btn-primary" %>
+    </div>
+    <div class="col text-end">
+      <%= form_with(url: projects_path, method: :get, class: "mb-3") do |f| %>
+        <div class="input-group">
+          <%= f.text_field :search, value: params[:search], class: "form-control", placeholder: "Поиск по группам документов" %>
+          <% if params[:search].present? %>
+            <%= button_to 'Снять фильтр', projects_path, method: :get, params: { search: nil }, class: "btn btn-warning" %>
+          <% end %>
+          <%= f.submit "Поиск", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+
+    </div>
   </div>
+
+
 </div>
 
 <%= render "shared/show_pagination" %>
@@ -12,7 +28,8 @@
 <table class="table">
   <thead>
   <tr>
-    <th scope="col">Группа документов</th>
+    <th scope="col" class="fixed-width">Группа документов</th>
+    <th scope="col">Комментарий</th>
     <th scope="col"></th>
   </tr>
   </thead>
@@ -20,6 +37,7 @@
     <% @projects.each do |project| %>
       <tr>
         <td><%= link_to project.name, project %></td>
+        <td><%=  project.comment %></td>
         <td>
             <%= button_to 'Удалить', project_path(project), method: :delete,
                           data: { turbo_confirm: 'Are you sure?' },
