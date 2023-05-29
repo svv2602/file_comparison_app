@@ -15,6 +15,7 @@ class ProjectsController < ApplicationController
   # GET /projects/1
   def show
     # @results = ""
+    session[:compare_params] = {}
   end
 
   # GET /projects/new
@@ -24,11 +25,15 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1/edit
   def edit
+
   end
 
   def compare_form
-    @uploaded_files = @project.uploaded_files # Добавьте эту строку
-    # Логика для отображения формы compare_form
+    @uploaded_files = @project.uploaded_files
+    # Загрузить сохраненные параметры из сеанса
+    session[:compare_params] = {} if params[:source] == 'show'
+    @compare_params = session[:compare_params] || {}
+    @file_options = @uploaded_files.map { |uf| [uf.name, uf.id] }
   end
 
   # POST /projects
@@ -64,7 +69,7 @@ class ProjectsController < ApplicationController
   end
 
   def compare
-
+    set_session_data
     begin
       @results = nil
       # Извлечь файлы из проекта по их ID
@@ -83,27 +88,24 @@ class ProjectsController < ApplicationController
         if pdf_processor1.contains_text? && pdf_processor2.contains_text?
           @results = PdfProcessor.match_result(pdf_processor1, pdf_processor2, percent)
           @@result_temp = @results
+          # Сохранить выбранные параметры в сеанс
           # respond_to do |format|
           #   format.turbo_stream { render turbo_stream: turbo_stream.append("results", partial: "projects/compare_results", locals: { results: @results }) }
           # end
           redirect_to compare_new_results_project_path(@project)
         else
-          # flash.clear
           flash[:warning] = find_error_files(pdf_processor1, pdf_processor2)
-          # render :compare_form
           redirect_to compare_form_project_path(@project)
         end
       else
         # flash.clear
         flash[:warning] = "Пожалуйста, выберите файлы для сравнения"
-        # render :compare_form
         redirect_to compare_form_project_path(@project)
       end
 
     rescue ArgumentError => e
       flash.clear
       flash[:danger] = e.message
-      # render :compare_form
       redirect_to compare_form_project_path(@project)
       return
     end
@@ -113,9 +115,23 @@ class ProjectsController < ApplicationController
   def compare_new_results
     # Возможно, вам потребуется получить необходимые данные для отображения результатов сравнения
      @results = @@result_temp
+    puts "session[:compare_params] ======= #{session[:compare_params].inspect}"
+
   end
 
   private
+
+  def set_session_data
+    session[:compare_params] = {
+      file1_id: params[:file1_id],
+      start_line1: params[:start_line1],
+      end_line1: params[:end_line1],
+      file2_id: params[:file2_id],
+      start_line2: params[:start_line2],
+      end_line2: params[:end_line2],
+      percent: params[:percent]
+    }
+  end
 
   def find_error_files(o1, o2)
     case
