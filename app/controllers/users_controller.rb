@@ -68,8 +68,9 @@ class UsersController < ApplicationController
   end
 
   def authorize_admin
-    flash[:danger] = "У вас нет разрешения на выполнение этого действия."
-    redirect_to root_path unless current_user.admin?
-    # redirect_to root_path, alert: 'У вас нет разрешения на выполнение этого действия.' unless current_user.admin?
+    unless current_user.admin?
+      flash[:danger] = "У вас нет разрешения на выполнение этого действия."
+      redirect_to root_path
+    end
   end
 end

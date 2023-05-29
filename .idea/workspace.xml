@@ -6,10 +6,15 @@
   <component name="ChangeListManager">
     <list default="true" id="e55cbc29-08c5-47ad-bbbf-a7cfe43b1207" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/assets/stylesheets/custom.css.scss" beforeDir="false" afterPath="$PROJECT_DIR$/app/assets/stylesheets/custom.css.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/controllers/projects_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/projects_controller.rb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/projects/index.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/projects/index.html.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Gemfile" beforeDir="false" afterPath="$PROJECT_DIR$/Gemfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Gemfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Gemfile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/controllers/uploaded_files_controller.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/controllers/uploaded_files_controller.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/uploaded_file.rb" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/uploaded_file.rb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/projects/_file_table.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/projects/_file_table.html.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views/projects/_form.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/projects/_form.html.erb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/views/projects/show.html.erb" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/projects/show.html.erb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/database.yml" beforeDir="false" afterPath="$PROJECT_DIR$/config/database.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,7 +63,26 @@
       <recent name="$PROJECT_DIR$/app/assets" />
     </key>
   </component>
-  <component name="RunManager" selected="Rails.FileComparisonApp">
+  <component name="RunManager" selected="Ruby Console.rails console">
+    <configuration name="rails console" type="IrbRunConfigurationType" factoryName="IRB console" temporary="true">
+      <module name="FileComparisonApp" />
+      <IRB_RUN_CONFIG NAME="RUBY_ARGS" VALUE="" />
+      <IRB_RUN_CONFIG NAME="WORK DIR" VALUE="$MODULE_DIR$" />
+      <IRB_RUN_CONFIG NAME="SHOULD_USE_SDK" VALUE="false" />
+      <IRB_RUN_CONFIG NAME="ALTERN_SDK_NAME" VALUE="" />
+      <IRB_RUN_CONFIG NAME="myPassParentEnvs" VALUE="true" />
+      <EXTENSION ID="BundlerRunConfigurationExtension" BUNDLE_MODE="AUTO" bundleExecEnabled="true" />
+      <EXTENSION ID="RubyCoverageRunConfigurationExtension" track_test_folders="true" runner="rcov" ENABLE_BRANCH_COVERAGE="true" ENABLE_FORKED_COVERAGE="true">
+        <COVERAGE_PATTERN ENABLED="true">
+          <PATTERN REGEXPS="/.rvm/" INCLUDED="false" />
+        </COVERAGE_PATTERN>
+      </EXTENSION>
+      <EXTENSION ID="org.jetbrains.plugins.ruby.rails.run.RailsRunConfigurationExtension" SCRATCH_USE_RAILS_RUNNER="false" />
+      <IRB_RUN_CONFIG NAME="SCRIPT_PATH" VALUE="$MODULE_DIR$/bin/rails" />
+      <IRB_RUN_CONFIG NAME="SCRIPT_ARGS" VALUE="console" />
+      <IRB_RUN_CONFIG NAME="CONSOLE_TYPE" VALUE="RAILS" />
+      <method v="2" />
+    </configuration>
     <configuration name="FileComparisonApp" type="RailsRunConfigurationType" factoryName="Rails">
       <module name="FileComparisonApp" />
       <predefined_log_file enabled="true" id="RUBY_RAILS_SERVER" />
@@ -132,6 +156,11 @@
       <RAKE_RUN_CONFIG_SETTINGS_ID NAME="RAKE_TASK_OPTION_TESTOPTS" VALUE="" />
       <method v="2" />
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Ruby Console.rails console" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SpringUtil" SPRING_PRE_LOADER_OPTION="true" RAKE_SPRING_PRE_LOADER_OPTION="true" RAILS_SPRING_PRE_LOADER_OPTION="true" />
@@ -149,11 +178,14 @@
       <workItem from="1684589352507" duration="253000" />
       <workItem from="1684590679916" duration="1002000" />
       <workItem from="1684592573042" duration="35496000" />
-      <workItem from="1685014384412" duration="99898000" />
+      <workItem from="1685014384412" duration="117046000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/FileComparisonApp@rails_console.rcov" NAME="rails console Coverage Results" MODIFIED="1685385900089" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="rcov" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" MODULE_NAME="FileComparisonApp" />
   </component>
 </project>

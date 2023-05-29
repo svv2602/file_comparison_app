@@ -83,10 +83,24 @@ class UploadedFilesController < ApplicationController
   end
 
   def destroy
+    @uploaded_file = UploadedFile.find(params[:id])
+    @project = @uploaded_file.project # Получаем связанный проект
+
+    # Удаляем файлы из хранилища Active Storage
+    @uploaded_file.content.purge if @uploaded_file.content.attached?
+    @uploaded_file.processed_file.purge if @uploaded_file.processed_file.attached?
+
+    # Удаляем только запись о загруженном файле, не удаляя связанный проект
     @uploaded_file.destroy
+
     flash[:success] = 'Файл был успешно удален из проекта.'
     redirect_to project_path(@project)
+
+
   end
+
+
+
 
   def create_pdf
     # @uploaded_file.update(text_content: params[:uploaded_file][:text_content])
@@ -117,7 +131,9 @@ class UploadedFilesController < ApplicationController
   end
 
   def set_file
-    @uploaded_file = @project.uploaded_files.find(params[:id])
+    @uploaded_file = UploadedFile.find(params[:id])
+    @project = @uploaded_file.project
+    # @uploaded_file = @project.uploaded_files.find(params[:id])
   end
 
   def file_params

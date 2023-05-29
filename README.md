@@ -1,24 +1,13 @@
-# README
+### README
+* Для работы приложения необходима установка
+  *  apt install -y tesseract-ocr libtesseract-dev poppler-utils
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* Создать пользователя с правами админ в консоле
+```
+$ rails c
+ 
+User.create!(email:'admin@example.com',
+            password:"password",
+            password_confirmation:"password", 
+            role:"admin")
+``` 

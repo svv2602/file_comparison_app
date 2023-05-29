@@ -1,3 +1,5 @@
+<!--app/views/projects/_file_table.html.erb-->
+
 <% if !project.new_record? %>
   <h4>Прикрепленные файлы: </h4>
   <div class="mb-3">
@@ -32,10 +34,9 @@
 
           <td><%= uploaded_file.created_at.to_s(:db) %></td>
           <td>
-            <%= button_to "Удалить", project_file_path(project, uploaded_file), method: :delete,data: { confirm: 'Вы уверены, что хотите удалить этот файл?' }, class: 'btn btn-danger' %>
-            <%#= turbo_frame_tag "file_#{uploaded_file.id}" do %>
-              <%#= button_to "Удалить", project_file_path(project, uploaded_file), method: :delete, data: { turbo_confirm: 'Вы уверены, что хотите удалить этот файл?' }, class: 'btn btn-danger' %>
-            <%# end %>
+            <%#= button_to "Удалить", project_file_path(project, uploaded_file), method: :delete,data: { confirm: 'Вы уверены, что хотите удалить этот файл?' }, class: 'btn btn-danger' %>
+            <%= button_to "Удалить", project_file_path(project, uploaded_file), method: :delete, data: { confirm: 'Вы уверены, что хотите удалить этот файл?' }, class: 'btn btn-danger' %>
+
           </td>
         </tr>
       <% end %>
