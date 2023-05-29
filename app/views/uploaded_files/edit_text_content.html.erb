@@ -3,7 +3,7 @@
   <%= form_for [@uploaded_file.project, @uploaded_file], url: update_text_content_project_file_path(@uploaded_file.project, @uploaded_file), method: :patch do |f| %>
     <div class="form-group">
       <%= f.label "Текст для корректировки:" %>
-      <%= f.text_area :text_content, class: 'form-control h-100', rows: 30 %>
+      <%= f.text_area :text_content, class: 'form-control h-100', rows: 26 %>
     </div>
 
     <div class="row ">
@@ -17,14 +17,29 @@
 
   <% end %>
 
-  <div class="row ">
-    <div class="col-auto">
-      <%= link_to '< Назад', project_path(@project), class: "btn btn-primary mt-3", target: "new_file" %>
-    </div>
-    <div class="col-auto">
-      <%= button_to 'Загрузить OCR', upload_file_content_project_file_path(@uploaded_file.project, @uploaded_file), method: :post, class: 'btn btn-warning mt-3' %>
-    </div>
-    <div class="col-auto">
-      <%= button_to 'Обновить OCR', create_pdf_project_file_path(@uploaded_file.project, @uploaded_file), method: :post, class: 'btn btn-warning mt-3' %>
-    </div>
+<div class="row">
+  <div class="col-auto">
+    <table class="table table-borderless">
+      <tr>
+        <td> Загрузить данные из OCR файла </td>
+        <td><%= button_to upload_file_content_project_file_path(@uploaded_file.project, @uploaded_file), method: :post, class: 'btn btn-warning' do %>
+            Загрузить
+          <% end %>
+        </td>
+      </tr>
+      <tr>
+        <td> Обновить PDF файл текстовыми данными OCR</td>
+        <td><%= button_to create_pdf_project_file_path(@uploaded_file.project, @uploaded_file), method: :post, class: 'btn btn-warning' do %>
+            Обновить
+          <% end %></td>
+      </tr>
+      <tr>
+        <td> Вернуться к списку файлов </td>
+        <td><%= link_to project_path(@project), class: "btn btn-primary", target: "new_file" do %>
+               <<   Назад
+          <% end %></td>
+      </tr>
+    </table>
   </div>
+</div>
+
