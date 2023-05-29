@@ -13,7 +13,9 @@ Rails.application.routes.draw do
         post 'create_pdf'
       end
     end
-    get 'compare_form', on: :member
+    get 'compare_form', to: 'projects#compare_form', on: :member
+    get 'compare_new_results', to: 'projects#compare_new_results', on: :member
+
     post 'compare', on: :member
   end
 

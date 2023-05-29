@@ -1,5 +1,4 @@
 <!--app/views/projects/compare_form.html.erb-->
-<%= render 'shared/flash_messages' %>
 
 <h3><%= @project.name %></h3>
 <%= form_with(url: compare_project_path(@project), method: :post, local: true) do |form| %>
@@ -64,7 +63,7 @@
 
 
   <%# if @results.present? %>
-  <turbo-frame id="results">
-    <%= render 'projects/compare_results', results: @results %>
-  </turbo-frame>
+<!--  <turbo-frame id="results">-->
+    <%#= render 'projects/compare_results', results: @results %>
+<!--  </turbo-frame>-->
   <%# end %>

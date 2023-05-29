@@ -2,7 +2,8 @@ require 'servis_pdf/pdf_processor'
 
 class ProjectsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_project, only: [:show, :edit, :update, :destroy, :compare, :destroy_file, :compare_form]
+  before_action :set_project, only: [:show, :edit, :update, :destroy, :compare_new_results,
+                                     :compare, :destroy_file, :compare_form]
 
   # GET /projects
   def index
@@ -81,30 +82,37 @@ class ProjectsController < ApplicationController
 
         if pdf_processor1.contains_text? && pdf_processor2.contains_text?
           @results = PdfProcessor.match_result(pdf_processor1, pdf_processor2, percent)
-
-          respond_to do |format|
-            format.turbo_stream { render turbo_stream: turbo_stream.append("results", partial: "projects/compare_results", locals: { results: @results }) }
-          end
+          @@result_temp = @results
+          # respond_to do |format|
+          #   format.turbo_stream { render turbo_stream: turbo_stream.append("results", partial: "projects/compare_results", locals: { results: @results }) }
+          # end
+          redirect_to compare_new_results_project_path(@project)
         else
-          flash.now[:danger] = find_error_files(pdf_processor1, pdf_processor2)
-          render :compare_form
-          # redirect_to @project
+          # flash.clear
+          flash[:warning] = find_error_files(pdf_processor1, pdf_processor2)
+          # render :compare_form
+          redirect_to compare_form_project_path(@project)
         end
       else
-        flash.now[:warning] = "Пожалуйста, выберите файлы для сравнения"
-        render :compare_form
-        # redirect_to @project
+        # flash.clear
+        flash[:warning] = "Пожалуйста, выберите файлы для сравнения"
+        # render :compare_form
+        redirect_to compare_form_project_path(@project)
       end
 
     rescue ArgumentError => e
       flash.clear
-      flash.now[:danger] = e.message
-      render :compare_form
-      # redirect_to @project
+      flash[:danger] = e.message
+      # render :compare_form
+      redirect_to compare_form_project_path(@project)
       return
     end
 
+  end
 
+  def compare_new_results
+    # Возможно, вам потребуется получить необходимые данные для отображения результатов сравнения
+     @results = @@result_temp
   end
 
   private

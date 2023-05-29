@@ -10,13 +10,15 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
+  <body  data-turbo-frame="default">
   <%= render 'layouts/header' %>
   <div class="container container-fluid mt-5 page-content">
-    <div id="flash-messages">
+<!--    <div id="flash-messages">-->
+      <%#= render 'shared/flash_messages' %>
+<!--    </div>-->
+    <div id="flash-messages" data-turbo-frame="flash-messages">
       <%= render 'shared/flash_messages' %>
     </div>
-
 
     <%= yield %>
   </div>
