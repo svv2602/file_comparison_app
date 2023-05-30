@@ -33,8 +33,18 @@ module TextProcessing
 
 
   def create_pdf_from_text(uploaded_file)
-    pdf = Prawn::Document.new
-    pdf.text uploaded_file.text_content
+    pdf = Prawn::Document.new do
+      font_families.update(
+        "CustomFont" => {
+          normal: "#{Rails.root}/app/assets/fonts/DejaVuSans.ttf",
+          bold: "#{Rails.root}/app/assets/fonts/DejaVuSans-Bold.ttf",
+          italic: "#{Rails.root}/app/assets/fonts/DejaVuSans-Oblique.ttf",
+          bold_italic: "#{Rails.root}/app/assets/fonts/DejaVuSans-BoldOblique.ttf"
+        }
+      )
+      font "CustomFont"
+      text uploaded_file.text_content.encode("UTF-8")
+    end
 
     pdf_path = Rails.root.join('tmp', 'processed_pdf.pdf')
     pdf.render_file(pdf_path)
@@ -52,5 +62,7 @@ module TextProcessing
     # Удаляем временный файл PDF
     File.delete(pdf_path)
   end
+
+
 
 end
