@@ -1,17 +1,18 @@
 
-
 <%= form_with(model: @project, local: true) do |form| %>
   <% if @project.errors.any? %>
     <div id="error_explanation" class="alert alert-danger">
-      <h2><%= pluralize(project.errors.count, "error") %> prohibited this project from being saved:</h2>
+      <h2><%= pluralize(@project.errors.count, "error") %> prohibited this project from being saved:</h2>
 
       <ul>
-        <% project.errors.full_messages.each do |message| %>
+        <% @project.errors.full_messages.each do |message| %>
           <li><%= message %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
+
+
   <div class="mb-3">
     <% if @project.new_record? %>
       <strong>Дата создания: </strong> <%= format_datetime(Time.current.localtime) %>

@@ -6,9 +6,12 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
+
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
-
+        <li class="nav-item">
+          <%= link_to "Группы документов", root_path, class: "nav-link" %>
+        </li>
 
         <% if user_signed_in? %>
           <% if current_user.can_edit_users? %>

@@ -2,7 +2,7 @@
 
   <%= form_for [@uploaded_file.project, @uploaded_file], url: update_text_content_project_file_path(@uploaded_file.project, @uploaded_file), method: :patch do |f| %>
     <div class="form-group">
-      <%= f.label "Текст для корректировки:" %>
+      <h4><%= f.label "Текст для корректировки:" %></h4>
       <%= f.text_area :text_content, class: 'form-control h-100', rows: 26 %>
     </div>
 

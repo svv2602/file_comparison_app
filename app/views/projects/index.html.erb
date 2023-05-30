@@ -38,7 +38,7 @@
       <tr>
         <td><%= link_to project.name, project %></td>
         <td><%=  project.comment %></td>
-        <td>
+        <td class="ms-auto text-end">
             <%= button_to 'Удалить', project_path(project), method: :delete,
                           data: { turbo_confirm: 'Are you sure?' },
                           class: 'btn btn-danger' %>
