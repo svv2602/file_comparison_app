@@ -3,6 +3,12 @@ ru:
     attributes:
       project:
         name: "Наименование"
+    errors:
+      models:
+        project:
+          attributes:
+            name:
+              blank: "не может быть пустым"
   devise:
     failure:
       already_authenticated: 'Вы уже авторизованы.'
