@@ -16,21 +16,19 @@
 
   <% end %>
 
-<div class="row">
+<div class="row mt-3">
   <div class="col-auto">
     <table class="table table-borderless">
       <tr>
-        <td> Загрузить данные из OCR файла </td>
         <td><%= button_to upload_file_content_project_file_path(@uploaded_file.project, @uploaded_file), method: :post, class: 'btn btn-warning' do %>
             Загрузить
           <% end %>
         </td>
       </tr>
       <tr>
-        <td> Вернуться к списку файлов </td>
-        <td><%= link_to project_path(@project), class: "btn btn-primary", target: "new_file" do %>
-               <<   Назад
-          <% end %></td>
+        <td>
+          <%= link_to "<< Назад", session[:return_to] || root_path, class: "btn btn-primary" %>
+        </td>
       </tr>
     </table>
   </div>

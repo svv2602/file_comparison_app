@@ -1,11 +1,11 @@
 <!--app/views/projects/compare_new_results.html.erb-->
-<%= hidden_field_tag :return_to, request.fullpath %>
+
 <%# if @results.present? %>
   <div class="row ">
     <div class="col-auto text-center">
-      <h4 class="mt-2">Результат сравнения</h4>
+      <h4 class="mt-2">Результат сравнения при совпадении >= <%= session[:compare_params]["percent"] %>%</h4>
     </div>
-    <div class="col">
+    <div class="col ms-auto text-end">
       <%= link_to '< Назад',  compare_form_project_path(@project), class: "btn btn-warning" %>
     </div>
   </div>
@@ -50,6 +50,14 @@
     <% end %>
     </tbody>
   </table>
+
+<div class="row ms-auto text-end">
+
+<!--  <div class="col ms-auto text-end">-->
+    <%= link_to '< Изменить параметры для сравнения файлов',  compare_form_project_path(@project), class: "btn btn-warning" %>
+<!--  </div>-->
+</div>
+
 
 
 <%# end %>

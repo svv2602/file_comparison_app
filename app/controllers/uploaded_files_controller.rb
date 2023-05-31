@@ -30,7 +30,9 @@ class UploadedFilesController < ApplicationController
     if @uploaded_file.update(text_content: params[:uploaded_file][:text_content])
       flash[:success] = 'Текст успешно обновлен.'
       create_pdf
-      redirect_to edit_text_content_project_file_path(@uploaded_file.project, @uploaded_file)
+      # redirect_to edit_text_content_project_file_path(@uploaded_file.project, @uploaded_file)
+      return_to = session.delete(:return_to) || root_path # По умолчанию перенаправляем на корневой путь, если значение не задано
+      redirect_to return_to
     else
       flash.now[:info] = 'Ошибка при обновлении текста.'
       render :edit_text_content

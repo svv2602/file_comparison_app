@@ -24,6 +24,7 @@ class ProjectsController < ApplicationController
   def show
     # @results = ""
     session[:compare_params] = {}
+    session[:return_to] = request.fullpath
   end
 
   # GET /projects/new
@@ -37,6 +38,7 @@ class ProjectsController < ApplicationController
   end
 
   def compare_form
+    session[:return_to] = request.fullpath
     @uploaded_files = @project.uploaded_files
     # Загрузить сохраненные параметры из сеанса
     session[:compare_params] = {} if params[:source] == 'show'

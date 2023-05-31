@@ -41,9 +41,9 @@
   </div>
 
   <div class="form-group row mt-3">
-    <%= form.label :percent, 'Минимальный процент совпадений:', class: 'col-sm-3 col-form-label' %>
-    <div class="col-sm-8">
-      <%= form.number_field :percent, class: 'form-control', min: 0, max: 100, style: 'width: 5rem;', value: @compare_params['percent'] %>
+    <%= form.label :percent, 'Минимальный процент совпадений, %:', class: 'col-sm-3 col-form-label' %>
+    <div class="col-sm-8 ">
+        <%= form.number_field :percent, class: 'form-control blue-yellow-text-bold', min: 0, max: 100, style: 'width: 5rem;', value: @compare_params['percent']||50 %>
     </div>
   </div>
 
