@@ -124,8 +124,8 @@ class ProjectsController < ApplicationController
     # Возможно, вам потребуется получить необходимые данные для отображения результатов сравнения
     @results = @@result_temp
 
-    @name_file1 = UploadedFile.find(session[:compare_params]["file1_id"]).name
-    @name_file2 = UploadedFile.find(session[:compare_params]["file2_id"]).name
+    @name_file1 = UploadedFile.find(session[:compare_params]["file1_id"])
+    @name_file2 = UploadedFile.find(session[:compare_params]["file2_id"])
 
   end
 

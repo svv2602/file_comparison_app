@@ -12,10 +12,10 @@
 
 <div class="row mt-3 text-center align-items-center"  style="background-color: var(--bs-primary); color: white;">
   <div class="col ">
-     <%= @name_file1 %>
+    <%= link_to @name_file1.name, rails_blob_path(@name_file1.content), target: "_blank", style: "background-color: var(--bs-primary); color: white;" %>
   </div>
   <div class="col">
-     <%= @name_file2 %>
+    <%= link_to @name_file2.name, rails_blob_path(@name_file2.content), target: "_blank", style: "background-color: var(--bs-primary); color: white;" %>
   </div>
 </div>
 
