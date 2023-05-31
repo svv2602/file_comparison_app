@@ -14,6 +14,8 @@ class ProjectsController < ApplicationController
       @projects = @projects.where("LOWER(name) LIKE ? OR LOWER(comment) LIKE ?", "%#{search_query}%", "%#{search_query}%")
     end
 
+    @projects = @projects.order(created_at: :desc)
+
     @pagy, @projects = pagy(@projects)
     @show_pagination = @projects.count > @pagy.items
   end
@@ -120,8 +122,10 @@ class ProjectsController < ApplicationController
 
   def compare_new_results
     # Возможно, вам потребуется получить необходимые данные для отображения результатов сравнения
-     @results = @@result_temp
-    puts "session[:compare_params] ======= #{session[:compare_params].inspect}"
+    @results = @@result_temp
+
+    @name_file1 = UploadedFile.find(session[:compare_params]["file1_id"]).name
+    @name_file2 = UploadedFile.find(session[:compare_params]["file2_id"]).name
 
   end
 
