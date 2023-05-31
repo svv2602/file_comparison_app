@@ -10,14 +10,27 @@
     </div>
   </div>
 
-<div class="row mt-3 text-center align-items-center"  style="background-color: var(--bs-primary); color: white;">
-  <div class="col ">
-    <%= link_to @name_file1.name, rails_blob_path(@name_file1.content), target: "_blank", style: "background-color: var(--bs-primary); color: white;" %>
+<div class="row mt-3 text-center align-items-center " style="background-color: var(--bs-primary); color: white;">
+  <div class="col h-100">
+    <div class="d-flex justify-content-center align-items-center h-100 py-3">
+      <strong><%= @name_file1.name%> : </strong>
+      <%= link_to 'pdf', rails_blob_path(@name_file1.content), target: "_blank", style: "background-color: var(--bs-primary); color: aqua;", class: "ms-3" %>
+      <%= link_to 'OCR', edit_text_content_project_file_path(@project, @name_file1.id), style: "background-color: var(--bs-primary); color: yellow;", class: "ms-3" %>
+    </div>
   </div>
-  <div class="col">
-    <%= link_to @name_file2.name, rails_blob_path(@name_file2.content), target: "_blank", style: "background-color: var(--bs-primary); color: white;" %>
+  <div class="col h-100">
+    <div class="d-flex justify-content-center align-items-center h-100 py-3">
+      <strong><%= @name_file2.name%> : </strong>
+      <%= link_to 'pdf', rails_blob_path(@name_file2.content), target: "_blank", style: "background-color: var(--bs-primary); color: aqua;", class: "ms-3" %>
+      <%= link_to 'OCR', edit_text_content_project_file_path(@project, @name_file2.id), style: "background-color: var(--bs-primary); color: yellow;", class: "ms-3" %>
+    </div>
   </div>
 </div>
+
+
+
+
+
 
   <table class="table table-bordered ">
     <thead>
