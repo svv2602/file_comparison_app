@@ -110,9 +110,11 @@ class UploadedFilesController < ApplicationController
     if file_content.present?
       @uploaded_file.text_content = extract_text(file_content)
       @uploaded_file.save
-      flash[:success] = 'Оригинальный файл успешно загружен.'
-      redirect_to edit_text_content_project_file_path(@uploaded_file.project, @uploaded_file)
+      flash[:success] = 'Текст из файла OCR успешно загружен.'
+    else
+      flash[:danger] = 'Для файла нет распознанного текста'
     end
+    redirect_to edit_text_content_project_file_path(@uploaded_file.project, @uploaded_file)
   end
 
   private
