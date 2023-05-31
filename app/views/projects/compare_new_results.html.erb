@@ -1,5 +1,5 @@
 <!--app/views/projects/compare_new_results.html.erb-->
-
+<%= hidden_field_tag :return_to, request.fullpath %>
 <%# if @results.present? %>
   <div class="row ">
     <div class="col-auto text-center">
@@ -26,11 +26,6 @@
     </div>
   </div>
 </div>
-
-
-
-
-
 
   <table class="table table-bordered ">
     <thead>

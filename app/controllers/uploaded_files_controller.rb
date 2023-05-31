@@ -29,8 +29,8 @@ class UploadedFilesController < ApplicationController
   def update_text_content
     if @uploaded_file.update(text_content: params[:uploaded_file][:text_content])
       flash[:success] = 'Текст успешно обновлен.'
+      create_pdf
       redirect_to edit_text_content_project_file_path(@uploaded_file.project, @uploaded_file)
-      # redirect_to project_path(@uploaded_file.project)
     else
       flash.now[:info] = 'Ошибка при обновлении текста.'
       render :edit_text_content
@@ -99,11 +99,8 @@ class UploadedFilesController < ApplicationController
 
 
   def create_pdf
-    # @uploaded_file.update(text_content: params[:uploaded_file][:text_content])
     create_pdf_from_text(@uploaded_file)
     flash[:success] = 'PDF успешно обновлен.'
-    # redirect_to project_path(@project)
-    redirect_to edit_text_content_project_file_path(@uploaded_file.project, @uploaded_file)
   end
 
   def upload_file_content
@@ -134,6 +131,6 @@ class UploadedFilesController < ApplicationController
   end
 
   def file_params
-    params.require(:uploaded_file).permit(:content,:processed_file)
+    params.require(:uploaded_file).permit(:content,:processed_file, :text_content)
   end
 end

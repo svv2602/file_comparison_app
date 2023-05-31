@@ -1,17 +1,16 @@
 <!-- edit_text_content.html.erb -->
 
   <%= form_for [@uploaded_file.project, @uploaded_file], url: update_text_content_project_file_path(@uploaded_file.project, @uploaded_file), method: :patch do |f| %>
-    <div class="form-group">
-      <h4><%= f.label "Текст для корректировки:" %></h4>
+
+  <h4>Файл: <%= @uploaded_file.name %></h4>
+  <div class="form-group">
+      <p><%= f.label "Текст для корректировки:" %></p>
       <%= f.text_area :text_content, class: 'form-control h-100', rows: 26 %>
     </div>
 
     <div class="row ">
       <div class="col-auto">
-        <%= f.submit 'Сохранить TXT', class: 'btn btn-primary mt-3' %>
-      </div>
-      <div class="col mt-4">
-        <p>Внимание!!! Чтобы обновить OCR текст нужно сохранить</p>
+        <%= f.submit 'Сохранить ', class: 'btn btn-primary mt-3' %>
       </div>
     </div>
 
@@ -26,12 +25,6 @@
             Загрузить
           <% end %>
         </td>
-      </tr>
-      <tr>
-        <td> Обновить PDF файл текстовыми данными OCR</td>
-        <td><%= button_to create_pdf_project_file_path(@uploaded_file.project, @uploaded_file), method: :post, class: 'btn btn-warning' do %>
-            Обновить
-          <% end %></td>
       </tr>
       <tr>
         <td> Вернуться к списку файлов </td>
